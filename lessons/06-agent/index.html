@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>06 · Agent 智能体 | AI START</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+</head>
+<body class="lesson-06">
+
+<div class="reveal">
+  <div class="slides">
+
+    <section class="cover">
+      <div class="episode">LESSON · 06</div>
+      <h1>让 LLM<br><span class="accent">自己</span><br>干活</h1>
+      <p class="slogan">Agent · 智能体的核心范式与典型框架。</p>
+    </section>
+
+    <section class="hero">
+      <h1>Agent =<br>LLM<br>+ <span class="accent">工具</span></h1>
+      <p class="fragment fade-up">+ 记忆 + 规划 + 循环。</p>
+    </section>
+
+    <section class="list">
+      <h2>四件套</h2>
+      <ul>
+        <li class="fragment"><strong>大脑</strong>：LLM 决策与规划</li>
+        <li class="fragment"><strong>工具</strong>：调用外部 API、执行代码、读写文件</li>
+        <li class="fragment"><strong>记忆</strong>：短期对话 + 长期向量化</li>
+        <li class="fragment"><strong>循环</strong>：观察 → 思考 → 行动 → 再观察</li>
+      </ul>
+    </section>
+
+    <section class="terminal">
+      <h2>react loop</h2>
+<pre><code class="language-text" data-trim>
+Question: 杭州明天天气如何？
+Thought: 我需要查询天气，调用 weather 工具。
+Action: weather(city="杭州", date="tomorrow")
+Observation: 多云，22-30℃，降水概率 20%。
+Thought: 我已经拿到信息，可以回答了。
+Final Answer: 杭州明天多云，22-30℃，降水 20%。
+</code></pre>
+    </section>
+
+    <section class="list">
+      <h2>Tool Use · 工具调用</h2>
+      <ul>
+        <li class="fragment"><strong>Function Calling</strong>：模型输出结构化函数调用</li>
+        <li class="fragment"><strong>JSON Schema</strong>：声明工具的入参类型</li>
+        <li class="fragment"><strong>多工具并行</strong>：现代模型支持一次调多个</li>
+        <li class="fragment"><strong>工具数</strong>：建议 ≤ 20，太多会"选困难"</li>
+      </ul>
+    </section>
+
+    <section class="terminal">
+      <h2>function calling</h2>
+<pre><code class="language-json" data-trim>
+{
+  "name": "search_doc",
+  "description": "在公司知识库里检索文档",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": { "type": "string", "description": "搜索关键词" },
+      "top_k": { "type": "integer", "default": 5 }
+    },
+    "required": ["query"]
+  }
+}
+</code></pre>
+    </section>
+
+    <section class="list">
+      <h2>记忆系统</h2>
+      <ul>
+        <li class="fragment"><strong>短期</strong>：当前对话窗口（messages 数组）</li>
+        <li class="fragment"><strong>长期</strong>：向量化存储 + 检索（RAG 思路）</li>
+        <li class="fragment"><strong>结构化</strong>：用户 profile / 偏好 / 实体记忆</li>
+        <li class="fragment"><strong>遗忘</strong>：定期摘要、淘汰冷数据</li>
+      </ul>
+    </section>
+
+    <section class="hero">
+      <h1>规划<br><span class="accent">能力</span></h1>
+      <p class="fragment fade-up">从"边走边想"到"先想再走"。</p>
+    </section>
+
+    <section class="list">
+      <h2>规划方法</h2>
+      <ul>
+        <li class="fragment"><strong>Plan-and-Execute</strong>：先列计划，再逐步执行</li>
+        <li class="fragment"><strong>Tree of Thoughts</strong>：探索多分支，回溯最优</li>
+        <li class="fragment"><strong>ReWOO</strong>：先规划全部步骤再执行，省 token</li>
+        <li class="fragment"><strong>Reflection</strong>：自我反思修正</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>多 Agent 协作</h2>
+      <ul>
+        <li class="fragment"><strong>角色分工</strong>：PM / Coder / Reviewer / Tester</li>
+        <li class="fragment"><strong>辩论</strong>：多方观点提升决策质量</li>
+        <li class="fragment"><strong>流水线</strong>：上一个的输出 = 下一个的输入</li>
+        <li class="fragment"><strong>层级</strong>：Lead Agent 调度 Sub Agent</li>
+      </ul>
+    </section>
+
+    <section class="hero">
+      <h1>MCP<br><span class="accent">协议</span></h1>
+      <p class="fragment fade-up">Anthropic 推的"Agent 工具的 USB-C"。</p>
+    </section>
+
+    <section class="list">
+      <h2>MCP 是什么</h2>
+      <ul>
+        <li class="fragment"><strong>Model Context Protocol</strong></li>
+        <li class="fragment">统一 LLM 与外部工具/资源/服务的接口标准</li>
+        <li class="fragment">写一次 MCP server，所有支持的客户端都能用</li>
+        <li class="fragment">类比：LSP 之于编辑器</li>
+        <li class="fragment accent">→ 工具生态的基础设施</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>主流框架</h2>
+      <ul>
+        <li class="fragment"><strong>LangGraph</strong> · 状态机驱动，控制力强</li>
+        <li class="fragment"><strong>LlamaIndex</strong> · 检索 + Agent 一体化</li>
+        <li class="fragment"><strong>AutoGen / CrewAI</strong> · 多 Agent 协作首选</li>
+        <li class="fragment"><strong>OpenAI Swarm</strong> · 极简多 Agent</li>
+        <li class="fragment"><strong>Smol Agents</strong> · HuggingFace 出品</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>失败模式</h2>
+      <ul>
+        <li class="fragment"><strong>死循环</strong>：相同的工具反复调用</li>
+        <li class="fragment"><strong>幻觉决策</strong>：编造工具名 / 参数</li>
+        <li class="fragment"><strong>成本失控</strong>：单任务 100 美刀的故事很多</li>
+        <li class="fragment"><strong>过度自信</strong>：不该用工具时也用</li>
+        <li class="fragment accent">→ 必须设：步数上限、成本上限、超时</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>实战场景</h2>
+      <ul>
+        <li class="fragment"><strong>编码 Agent</strong>：Cursor / Claude Code / Devin</li>
+        <li class="fragment"><strong>浏览器 Agent</strong>：Manus / Browser Use</li>
+        <li class="fragment"><strong>数据分析</strong>：Code Interpreter</li>
+        <li class="fragment"><strong>客服</strong>：FAQ + RAG + 工具串联</li>
+      </ul>
+    </section>
+
+    <section class="summary">
+      <h2>本课收获</h2>
+      <div class="keywords">
+        <span class="kw">ReAct 循环</span>
+        <span class="kw">Function Calling</span>
+        <span class="kw">记忆与规划</span>
+        <span class="kw">MCP</span>
+        <span class="kw">多 Agent</span>
+        <span class="kw">失败模式</span>
+      </div>
+      <p class="next">下一课 · <strong>微调与训练：什么时候该微调？</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="../../assets/js/common.js"></script>
+<script>initLesson();</script>
+</body>
+</html>

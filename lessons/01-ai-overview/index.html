@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01 · AI 全景图 | AI START</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+</head>
+<body class="lesson-01">
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 -->
+    <section class="cover">
+      <div class="episode">LESSON · 01</div>
+      <h1>70 年<br>一夜<br><span class="accent">之间</span></h1>
+      <p class="slogan">AI 全景图：把这场革命放进时间线里看。</p>
+    </section>
+
+    <!-- 2. 你在哪 -->
+    <section class="hero">
+      <h1>你<br>在哪？</h1>
+      <p class="fragment fade-up">作为<strong>程序员</strong>，你正站在 AI 浪潮的<strong>第三幕</strong>开场。</p>
+    </section>
+
+    <!-- 3. 三圈套娃 -->
+    <section class="list">
+      <h2>AI · ML · DL · GenAI</h2>
+      <ul>
+        <li class="fragment"><strong>AI</strong> — 让机器有"智能"的总集（1956 起）</li>
+        <li class="fragment"><strong>ML</strong> — 从数据里学规律（1980s）</li>
+        <li class="fragment"><strong>DL</strong> — 用神经网络学（2012 ImageNet）</li>
+        <li class="fragment"><strong>GenAI</strong> — 能"生成"内容的 DL（2017 Transformer 起）</li>
+        <li class="fragment"><strong>LLM</strong> — GenAI 中专攻语言的那部分（2022 ChatGPT 引爆）</li>
+      </ul>
+    </section>
+
+    <!-- 4. 70 年简史 -->
+    <section class="number">
+      <div class="num">70</div>
+      <div class="label">年五个关键节点</div>
+    </section>
+
+    <section class="list">
+      <h2>关键节点</h2>
+      <ul>
+        <li class="fragment"><span class="mono accent">1956</span> · 达特茅斯会议，"AI"被命名</li>
+        <li class="fragment"><span class="mono accent">1986</span> · 反向传播让神经网络可训练</li>
+        <li class="fragment"><span class="mono accent">2012</span> · AlexNet 引爆深度学习</li>
+        <li class="fragment"><span class="mono accent">2017</span> · Transformer 论文发表</li>
+        <li class="fragment"><span class="mono accent">2022.11</span> · ChatGPT 上线，世界变了</li>
+        <li class="fragment"><span class="mono accent">2024–</span> · Agent / 多模态 / 推理模型</li>
+      </ul>
+    </section>
+
+    <!-- 5. GPT 时刻 -->
+    <section class="quote">
+      <p class="saying">"<span class="accent">2 个月</span>用户破亿，<br>这是消费互联网史上<br>最快的一次。"</p>
+      <p class="author">ChatGPT, 2022.11.30</p>
+    </section>
+
+    <!-- 6. 为什么这次不一样 -->
+    <section class="list">
+      <h2>为什么这次不一样</h2>
+      <ul>
+        <li class="fragment"><strong>通用性</strong>：一个模型，无数任务</li>
+        <li class="fragment"><strong>对话化</strong>：自然语言就是 API</li>
+        <li class="fragment"><strong>涌现能力</strong>：尺度大到一定程度就"开窍"</li>
+        <li class="fragment"><strong>开发者友好</strong>：人人可调用，门槛骤降</li>
+      </ul>
+    </section>
+
+    <!-- 7. 现状版图 -->
+    <section class="vs">
+      <h2>当前格局</h2>
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <h3>闭源旗舰</h3>
+          <ul>
+            <li>OpenAI · GPT-5 / o-series</li>
+            <li>Anthropic · Claude</li>
+            <li>Google · Gemini</li>
+            <li>xAI · Grok</li>
+          </ul>
+        </div>
+        <div class="vs-mark">VS</div>
+        <div class="vs-side right">
+          <h3>开源生态</h3>
+          <ul>
+            <li>Meta · Llama</li>
+            <li>Mistral · Mixtral</li>
+            <li>DeepSeek · V3 / R1</li>
+            <li>Qwen · 通义千问</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. 模型尺寸 -->
+    <section class="list">
+      <h2>模型尺寸光谱</h2>
+      <ul>
+        <li class="fragment"><strong>1B–7B</strong>：边缘设备 / 手机本地</li>
+        <li class="fragment"><strong>13B–34B</strong>：单机消费级显卡</li>
+        <li class="fragment"><strong>70B</strong>：专业服务器</li>
+        <li class="fragment"><strong>400B+</strong>：旗舰能力的代价</li>
+        <li class="fragment"><strong>MoE</strong>：稀疏激活，性价比之王</li>
+      </ul>
+    </section>
+
+    <!-- 9. 评测榜单 -->
+    <section class="list">
+      <h2>评测三件套</h2>
+      <ul>
+        <li class="fragment"><span class="tag">通识</span><strong>MMLU</strong> · 57 个学科多选题</li>
+        <li class="fragment"><span class="tag">推理</span><strong>GPQA</strong> · 博士级推理</li>
+        <li class="fragment"><span class="tag">编码</span><strong>SWE-bench</strong> · 真实 GitHub issue 修复</li>
+        <li class="fragment"><span class="tag">数学</span><strong>AIME / MATH</strong> · 奥赛题</li>
+        <li class="fragment mute">⚠ 榜单只是参考，业务表现才是真实力</li>
+      </ul>
+    </section>
+
+    <!-- 10. 行业渗透 -->
+    <section class="list">
+      <h2>哪些行业最先变天</h2>
+      <ul>
+        <li class="fragment"><strong>编程</strong>：Copilot → Agent IDE</li>
+        <li class="fragment"><strong>客服</strong>：自动化率 50%+</li>
+        <li class="fragment"><strong>设计</strong>：Midjourney + 提示词工业流</li>
+        <li class="fragment"><strong>法律</strong>：合同审查、研究辅助</li>
+        <li class="fragment"><strong>医疗</strong>：影像 / 病历 / 文献</li>
+        <li class="fragment"><strong>教育</strong>：私人 1v1 教师</li>
+      </ul>
+    </section>
+
+    <!-- 11. 金句 -->
+    <section class="quote">
+      <p class="saying">未来已来，<br>只是<span class="accent">分布不均</span>。</p>
+      <p class="author">William Gibson</p>
+    </section>
+
+    <!-- 12. 总结 + 预告 -->
+    <section class="summary">
+      <h2>本课收获</h2>
+      <div class="keywords">
+        <span class="kw">AI/ML/DL/GenAI</span>
+        <span class="kw">5 个时间节点</span>
+        <span class="kw">闭源 vs 开源</span>
+        <span class="kw">模型尺寸光谱</span>
+      </div>
+      <p class="next">下一课 · <strong>LLM 原理速通：预测下一个词，怎么就成了智能？</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="../../assets/js/common.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 800,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    backgroundTransition: 'fade',
+    plugins: [RevealHighlight, RevealNotes]
+  });
+</script>
+</body>
+</html>

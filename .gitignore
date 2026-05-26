@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 日志 / 临时
+*.log
+tmp/
+.cache/
+
+# Node（备用）
+node_modules/
+dist/
+build/

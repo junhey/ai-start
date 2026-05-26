@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>04 · Prompt 工程 | AI START</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+</head>
+<body class="lesson-04">
+
+<a class="home-link" href="../../index.html">← AI START</a>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 -->
+    <section class="cover">
+      <div class="episode">LESSON · 04</div>
+      <h1>好的<br>Prompt<br><span class="accent">= 半个产品</span></h1>
+      <p class="slogan">Prompt 工程：从零样本到思维链，把语言变成控制权。</p>
+    </section>
+
+    <!-- 2. 灵魂拷问 -->
+    <section class="hero">
+      <h1>凭什么<br>它听你的？</h1>
+      <p class="fragment fade-up">LLM 没有程序逻辑，<strong>你说的方式</strong>就是它的行为。</p>
+    </section>
+
+    <!-- 3. 基本原则 -->
+    <section class="list">
+      <h2>好 Prompt 的四要素</h2>
+      <ul>
+        <li class="fragment"><strong>角色</strong> — 你是谁？给模型一个身份</li>
+        <li class="fragment"><strong>任务</strong> — 具体做什么？动词驱动</li>
+        <li class="fragment"><strong>上下文</strong> — 背景 / 约束 / 受众</li>
+        <li class="fragment"><strong>输出格式</strong> — JSON / 列表 / 长度限制</li>
+        <li class="fragment mute">四要素不必全有，但缺一个往往差一截</li>
+      </ul>
+    </section>
+
+    <!-- 4. Zero-shot -->
+    <section class="terminal">
+      <h2>Zero-shot</h2>
+      <pre><code class="language-text">你是一位代码审查专家。
+审查下面这段 Python 代码，
+列出所有安全隐患，每条一行。
+
+```python
+import os
+query = input()
+os.system("ls " + query)
+```</code></pre>
+      <p style="margin-top:0.6em;font-size:0.85em;color:#888;">零样本：直接告诉模型做什么，不给例子</p>
+    </section>
+
+    <!-- 5. Few-shot -->
+    <section class="list">
+      <h2>Few-shot · 少样本</h2>
+      <ul>
+        <li class="fragment"><strong>原理</strong>：用例子激活模型的"上下文学习"能力</li>
+        <li class="fragment"><strong>用途</strong>：统一输出格式、风格迁移、特殊判断逻辑</li>
+        <li class="fragment"><strong>数量</strong>：1~5 条通常够用，超过 10 条边际效益递减</li>
+        <li class="fragment"><strong>质量 > 数量</strong>：坏例子会误导模型</li>
+        <li class="fragment mute">→ 当 Zero-shot 结果不稳定时，先试 Few-shot</li>
+      </ul>
+    </section>
+
+    <!-- 6. Chain-of-Thought -->
+    <section class="quote">
+      <p class="saying">"Let's think<br><span class="accent">step by step</span>."</p>
+      <p class="author">Wei et al., 2022 — Chain-of-Thought Prompting</p>
+    </section>
+
+    <section class="list">
+      <h2>CoT · 思维链</h2>
+      <ul>
+        <li class="fragment"><strong>为什么有效</strong>：把"答案"变成"过程 + 答案"，减少捷径</li>
+        <li class="fragment"><strong>Zero-shot CoT</strong>：直接加 "Let's think step by step"</li>
+        <li class="fragment"><strong>Manual CoT</strong>：Few-shot 里的例子包含推理步骤</li>
+        <li class="fragment"><strong>适用场景</strong>：数学 / 逻辑 / 多步推理</li>
+        <li class="fragment mute">→ 复杂任务首选 CoT，简单任务没必要</li>
+      </ul>
+    </section>
+
+    <!-- 7. ReAct -->
+    <section class="list">
+      <h2>ReAct · 推理 + 行动</h2>
+      <ul>
+        <li class="fragment"><span class="tag">Thought</span> 模型推理当前状态</li>
+        <li class="fragment"><span class="tag">Action</span> 调用工具 / 搜索 / 执行</li>
+        <li class="fragment"><span class="tag">Observation</span> 获得结果，继续推理</li>
+        <li class="fragment"><strong>循环</strong>直到得出最终答案</li>
+        <li class="fragment mute">→ ReAct 是 Agent 的思维骨架</li>
+      </ul>
+    </section>
+
+    <!-- 8. Self-consistency -->
+    <section class="number">
+      <div class="num">N×</div>
+      <div class="label">采样 → 投票 → 最优答案</div>
+    </section>
+
+    <section class="list">
+      <h2>Self-Consistency · 自洽采样</h2>
+      <ul>
+        <li class="fragment"><strong>方法</strong>：同一问题跑 N 次 CoT，取多数答案</li>
+        <li class="fragment"><strong>代价</strong>：N 倍 token 消耗</li>
+        <li class="fragment"><strong>收益</strong>：复杂推理准确率显著提升</li>
+        <li class="fragment mute">适合离线批量处理，不适合实时对话</li>
+      </ul>
+    </section>
+
+    <!-- 9. 结构化输出 -->
+    <section class="terminal">
+      <h2>结构化输出</h2>
+      <pre><code class="language-json">// System prompt 里声明：
+"用 JSON 返回，格式如下：
+{
+  \"severity\": \"high|medium|low\",
+  \"issues\": [\"...\"],
+  \"suggestion\": \"...\"
+}"
+
+// 或使用 Tool Use / Function Calling
+// 直接绑定 JSON Schema</code></pre>
+    </section>
+
+    <!-- 10. 三角色 -->
+    <section class="vs">
+      <h2>System · User · Assistant</h2>
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <h3>System</h3>
+          <ul>
+            <li>角色 / 规则 / 人格</li>
+            <li>全局约束</li>
+            <li>不被 User 覆盖</li>
+          </ul>
+        </div>
+        <div class="vs-mark">+</div>
+        <div class="vs-side right">
+          <h3>User</h3>
+          <ul>
+            <li>当前请求</li>
+            <li>上下文信息</li>
+            <li>示例 / 数据</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:0.6em;font-size:0.85em;color:#888;">Assistant 是模型历史回复，Multi-turn 对话的记忆载体</p>
+    </section>
+
+    <!-- 11. Prompt 注入 -->
+    <section class="list">
+      <h2>Prompt 注入攻击</h2>
+      <ul>
+        <li class="fragment"><strong>直接注入</strong>：用户输入 "Ignore previous instructions..."</li>
+        <li class="fragment"><strong>间接注入</strong>：从外部数据（网页/文档）混入恶意指令</li>
+        <li class="fragment"><strong>越狱</strong>：角色扮演 / 编码绕过 / 语言混淆</li>
+        <li class="fragment"><span class="tag">防御</span> 系统提示明确边界，输入/输出过滤，最小权限原则</li>
+        <li class="fragment mute">→ 把 Prompt 当代码，安全同样重要</li>
+      </ul>
+    </section>
+
+    <!-- 12. 模板工程 -->
+    <section class="terminal">
+      <h2>可维护的 Prompt 模板</h2>
+      <pre><code class="language-python">SYSTEM = """
+你是一位资深 {role}。
+目标受众：{audience}
+输出语言：中文
+输出格式：{format}
+约束：{constraints}
+"""
+
+def build_prompt(role, audience, format, constraints):
+    return SYSTEM.format(
+        role=role,
+        audience=audience,
+        format=format,
+        constraints=constraints
+    )</code></pre>
+    </section>
+
+    <!-- 13. 评测 -->
+    <section class="list">
+      <h2>怎么知道 Prompt 真的好</h2>
+      <ul>
+        <li class="fragment"><strong>建测试集</strong>：用真实样本 + 标注答案</li>
+        <li class="fragment"><strong>自动评分</strong>：LLM-as-judge（用另一个模型打分）</li>
+        <li class="fragment"><strong>A/B 对比</strong>：两版 Prompt 跑同一批样本</li>
+        <li class="fragment"><strong>工具</strong>：Promptfoo / LangSmith / PromptLayer</li>
+        <li class="fragment mute">→ 没有评测的 Prompt 优化是玄学</li>
+      </ul>
+    </section>
+
+    <!-- 14. 总结 -->
+    <section class="summary">
+      <h2>本课收获</h2>
+      <div class="keywords">
+        <span class="kw">四要素</span>
+        <span class="kw">Zero/Few-shot</span>
+        <span class="kw">CoT 思维链</span>
+        <span class="kw">ReAct</span>
+        <span class="kw">结构化输出</span>
+        <span class="kw">注入防御</span>
+      </div>
+      <p class="next">下一课 · <strong>RAG 检索增强：把外部知识塞进 LLM 的标准方案。</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="../../assets/js/common.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 800,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    backgroundTransition: 'fade',
+    plugins: [RevealHighlight, RevealNotes]
+  });
+</script>
+</body>
+</html>

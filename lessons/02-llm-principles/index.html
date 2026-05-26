@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02 · LLM 原理速通 | AI START</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+</head>
+<body class="lesson-02">
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 -->
+    <section class="cover">
+      <div class="episode">LESSON · 02</div>
+      <h1>LLM<br>只做<br><span class="accent">一件事</span></h1>
+      <p class="slogan">预测下一个词。仅此而已。</p>
+    </section>
+
+    <!-- 2. 灵魂拷问 -->
+    <section class="hero">
+      <h1>"猜<br>下<br><span class="accent">一个</span>"</h1>
+      <p class="fragment fade-up">为什么这件小事，能产生看起来像智能的东西？</p>
+    </section>
+
+    <!-- 3. Token 是什么 -->
+    <section class="list">
+      <h2>Token 是什么</h2>
+      <ul>
+        <li class="fragment">不是字、不是词，是 <strong>BPE 子词单元</strong></li>
+        <li class="fragment"><span class="mono">"unbelievable"</span> → <span class="mono accent">["un", "believ", "able"]</span></li>
+        <li class="fragment">中文一个字常常 = 1-2 个 token</li>
+        <li class="fragment">英文一个单词常常 = 1-3 个 token</li>
+        <li class="fragment mute">⚠ 计费按 token 算，不是字数</li>
+      </ul>
+    </section>
+
+    <!-- 4. Tokenizer 演示 -->
+    <section class="terminal">
+      <h2>tokenizer demo</h2>
+<pre><code class="language-python" data-trim data-noescape>
+from tiktoken import encoding_for_model
+enc = encoding_for_model("gpt-4")
+
+text = "我爱 AI"
+tokens = enc.encode(text)
+print(tokens)
+# [37046, 102, 11, 15836]   ← 4 个 token
+
+print([enc.decode([t]) for t in tokens])
+# ['我', '爱', ' ', 'AI']
+</code></pre>
+    </section>
+
+    <!-- 5. 词嵌入 -->
+    <section class="hero">
+      <h1>每个 token<br>=<br><span class="accent">一个向量</span></h1>
+      <p class="fragment fade-up">维度 768 / 4096 / 12288 不等。语义相近 → 向量相近。</p>
+    </section>
+
+    <!-- 6. 上下文窗口 -->
+    <section class="list">
+      <h2>上下文窗口</h2>
+      <ul>
+        <li class="fragment"><strong>4K</strong> · GPT-3.5 时代标配</li>
+        <li class="fragment"><strong>128K</strong> · GPT-4 / Claude 3.5 主流</li>
+        <li class="fragment"><strong>1M+</strong> · Gemini 长上下文之王</li>
+        <li class="fragment"><strong>2M+</strong> · 实验性，性价比待考</li>
+        <li class="fragment mute">长上下文 ≠ 真的看完了。"中间丢失"问题真实存在。</li>
+      </ul>
+    </section>
+
+    <!-- 7. 自回归生成 -->
+    <section class="number">
+      <div class="num">→</div>
+      <div class="label">一个 token<br>一个 token 吐</div>
+    </section>
+
+    <section class="terminal">
+      <h2>autoregressive</h2>
+<pre><code class="language-python" data-trim>
+prompt = "今天天气"
+# 第 1 步: 模型看 "今天天气"     → 概率最高 "真"
+# 第 2 步: 模型看 "今天天气真"    → 概率最高 "好"
+# 第 3 步: 模型看 "今天天气真好"   → 概率最高 "。"
+# ...直到生成 < EOS > 或达到 max_tokens
+</code></pre>
+    </section>
+
+    <!-- 8. 三段式训练 -->
+    <section class="hero">
+      <h1>三段式<br>训练</h1>
+      <p class="fragment fade-up"><strong>Pretrain → SFT → RLHF/DPO</strong></p>
+    </section>
+
+    <!-- 9. Pretrain -->
+    <section class="list">
+      <h2>① Pretrain · 预训练</h2>
+      <ul>
+        <li class="fragment">数据：互联网 + 书籍 + 代码，<strong>万亿级 token</strong></li>
+        <li class="fragment">任务：预测下一个 token（最朴素）</li>
+        <li class="fragment">目标：把世界知识"压缩"进权重</li>
+        <li class="fragment">代价：算力消耗 99% 都在这里</li>
+        <li class="fragment mute">类比：让一个人通读了人类大半的书</li>
+      </ul>
+    </section>
+
+    <!-- 10. SFT -->
+    <section class="list">
+      <h2>② SFT · 监督微调</h2>
+      <ul>
+        <li class="fragment">数据：高质量 <strong>(指令, 答案)</strong> 对</li>
+        <li class="fragment">规模：从万到百万级</li>
+        <li class="fragment">目标：把"续写"改造成"对话"</li>
+        <li class="fragment mute">类比：教 ta 怎么"对话"，而不是"续写小说"</li>
+      </ul>
+    </section>
+
+    <!-- 11. RLHF -->
+    <section class="list">
+      <h2>③ RLHF / DPO · 偏好对齐</h2>
+      <ul>
+        <li class="fragment">数据：人类对两个回答打分（好/坏）</li>
+        <li class="fragment"><strong>RLHF</strong> · 训奖励模型 → PPO 强化学习</li>
+        <li class="fragment"><strong>DPO</strong> · 直接偏好优化，更简单</li>
+        <li class="fragment">目标：有用、无害、诚实</li>
+        <li class="fragment mute">类比：让 ta 学会"得体"地回答</li>
+      </ul>
+    </section>
+
+    <!-- 12. 幻觉 -->
+    <section class="quote">
+      <p class="saying">幻觉<br>不是 bug，<br>是<span class="accent">特性</span>。</p>
+      <p class="author">概率采样的代价</p>
+    </section>
+
+    <section class="list">
+      <h2>幻觉为什么存在</h2>
+      <ul>
+        <li class="fragment"><strong>本质</strong>：LLM 永远在"概率最高的下一个词"</li>
+        <li class="fragment"><strong>知识截断</strong>：训练数据有日期</li>
+        <li class="fragment"><strong>压缩损失</strong>：参数有限，细节会丢</li>
+        <li class="fragment"><strong>自信错误</strong>：流畅 ≠ 正确</li>
+        <li class="fragment accent">→ 解药：RAG、Tool Use、引用核对</li>
+      </ul>
+    </section>
+
+    <!-- 13. 温度 / Top-p -->
+    <section class="list">
+      <h2>采样参数</h2>
+      <ul>
+        <li class="fragment"><strong>temperature</strong> · 0 = 确定 / 1 = 创造</li>
+        <li class="fragment"><strong>top-p</strong> · 累积概率裁切（核采样）</li>
+        <li class="fragment"><strong>top-k</strong> · 只看前 k 个候选</li>
+        <li class="fragment"><strong>frequency_penalty</strong> · 抑制重复</li>
+        <li class="fragment mute">代码 / 抽取场景：temperature ≈ 0；创作场景：0.7-1</li>
+      </ul>
+    </section>
+
+    <!-- 14. 总结 + 预告 -->
+    <section class="summary">
+      <h2>本课收获</h2>
+      <div class="keywords">
+        <span class="kw">Token / Embedding</span>
+        <span class="kw">自回归</span>
+        <span class="kw">Pretrain → SFT → RLHF</span>
+        <span class="kw">幻觉根源</span>
+        <span class="kw">采样参数</span>
+      </div>
+      <p class="next">下一课 · <strong>Transformer 架构：Attention is All You Need</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="../../assets/js/common.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 800,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    plugins: [RevealHighlight, RevealNotes]
+  });
+</script>
+</body>
+</html>

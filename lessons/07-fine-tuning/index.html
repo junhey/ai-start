@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>07 · 微调与训练 | AI START</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+</head>
+<body class="lesson-07">
+
+<div class="reveal">
+  <div class="slides">
+
+    <section class="cover">
+      <div class="episode">LESSON · 07</div>
+      <h1>什么时候<br>该<br><span class="accent">微调？</span></h1>
+      <p class="slogan">微调与训练：成本、效果、决策。</p>
+    </section>
+
+    <section class="hero">
+      <h1>大多数<br>情况<br><span class="accent">不该</span></h1>
+      <p class="fragment fade-up">Prompt → RAG → 微调 → 预训练，按这个顺序考虑。</p>
+    </section>
+
+    <section class="list">
+      <h2>决策树</h2>
+      <ul>
+        <li class="fragment">问题是 <strong>提示不到位</strong>？→ 改 Prompt</li>
+        <li class="fragment">问题是 <strong>缺少知识</strong>？→ 加 RAG</li>
+        <li class="fragment">问题是 <strong>风格 / 格式 / 领域语言</strong>？→ 微调</li>
+        <li class="fragment">问题是 <strong>整个能力缺失</strong>？→ 预训练（罕见）</li>
+        <li class="fragment accent">微调不教知识，只改"风格倾向"</li>
+      </ul>
+    </section>
+
+    <section class="vs">
+      <h2>全参 vs LoRA</h2>
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <h3>全参微调</h3>
+          <ul>
+            <li>更新所有权重</li>
+            <li>显存爆炸（70B 需 1TB+）</li>
+            <li>效果上限高</li>
+            <li>代价昂贵</li>
+          </ul>
+        </div>
+        <div class="vs-mark">VS</div>
+        <div class="vs-side right">
+          <h3>LoRA</h3>
+          <ul>
+            <li>只训练低秩矩阵</li>
+            <li>参数量减少 10000×</li>
+            <li>消费级显卡可跑</li>
+            <li>效果接近全参</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero">
+      <h1>LoRA<br>核心<br><span class="accent">想法</span></h1>
+      <p class="fragment fade-up">大模型权重的"调整量"是低秩的。</p>
+    </section>
+
+    <section class="terminal">
+      <h2>lora math</h2>
+<pre><code class="language-text" data-trim>
+原始权重: W ∈ R^(d × d)            (d=4096, 参数 ≈ 16M)
+
+LoRA 改造:
+  W' = W + ΔW
+  ΔW = B · A         B ∈ R^(d × r), A ∈ R^(r × d)
+  通常 r = 8 / 16 / 64
+
+→ 训练参数:  d × r + r × d = 2 d r
+→ 当 r = 8:  16M → 65K, 减少 250 倍
+</code></pre>
+    </section>
+
+    <section class="list">
+      <h2>QLoRA · 4-bit 量化 + LoRA</h2>
+      <ul>
+        <li class="fragment">原模型权重压到 <strong>4-bit</strong> 存储</li>
+        <li class="fragment">前向时反量化，反向只更新 LoRA 部分</li>
+        <li class="fragment"><strong>单张 24GB 显卡微调 33B 模型</strong></li>
+        <li class="fragment">效果几乎无损</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>PEFT 全家桶</h2>
+      <ul>
+        <li class="fragment"><strong>LoRA / QLoRA</strong>：业界主流</li>
+        <li class="fragment"><strong>Prefix Tuning</strong>：在前缀加可学向量</li>
+        <li class="fragment"><strong>P-Tuning</strong>：可学的"软"提示词</li>
+        <li class="fragment"><strong>Adapter</strong>：在层间插入小模块</li>
+        <li class="fragment mute">没有银弹，按场景选</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>指令微调数据格式</h2>
+      <ul>
+        <li class="fragment"><strong>三段式</strong>：instruction / input / output</li>
+        <li class="fragment"><strong>对话式</strong>：messages: [system, user, assistant]</li>
+        <li class="fragment"><strong>规模</strong>：1k 条精标 > 10w 条粗标</li>
+        <li class="fragment"><strong>多样性</strong>：覆盖各类任务和长度</li>
+        <li class="fragment accent">"Less is More" — LIMA 论文核心结论</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>DPO · 直接偏好优化</h2>
+      <ul>
+        <li class="fragment">RLHF 复杂：要训奖励模型 + PPO</li>
+        <li class="fragment">DPO 直接用偏好对训练，简单稳定</li>
+        <li class="fragment">数据：(prompt, chosen, rejected)</li>
+        <li class="fragment">已成为主流偏好对齐方法</li>
+        <li class="fragment mute">变体：IPO / KTO / ORPO</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>算力估算（粗略）</h2>
+      <ul>
+        <li class="fragment"><strong>7B 全参</strong> · 8×A100 80GB · 几小时-几天</li>
+        <li class="fragment"><strong>7B QLoRA</strong> · 1×4090 24GB · 几小时</li>
+        <li class="fragment"><strong>70B QLoRA</strong> · 2×A100 80GB · 一天起</li>
+        <li class="fragment"><strong>云成本</strong> · 几十到几千美元一次</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>工具链</h2>
+      <ul>
+        <li class="fragment"><strong>LLaMA-Factory</strong> · 中文社区主流，零代码</li>
+        <li class="fragment"><strong>Axolotl</strong> · YAML 驱动，工业化</li>
+        <li class="fragment"><strong>Unsloth</strong> · 速度快 2-5×，显存省 50%</li>
+        <li class="fragment"><strong>HF TRL</strong> · 官方 SFT/DPO 库</li>
+      </ul>
+    </section>
+
+    <section class="summary">
+      <h2>本课收获</h2>
+      <div class="keywords">
+        <span class="kw">何时不该微调</span>
+        <span class="kw">LoRA / QLoRA</span>
+        <span class="kw">PEFT 家族</span>
+        <span class="kw">DPO 对齐</span>
+        <span class="kw">数据质量 > 数量</span>
+        <span class="kw">工具链</span>
+      </div>
+      <p class="next">下一课 · <strong>多模态 AI：AI 长出眼睛和耳朵</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="../../assets/js/common.js"></script>
+<script>initLesson();</script>
+</body>
+</html>

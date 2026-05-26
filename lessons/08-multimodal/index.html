@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>08 · 多模态 AI | AI START</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+</head>
+<body class="lesson-08">
+
+<div class="reveal">
+  <div class="slides">
+
+    <section class="cover">
+      <div class="episode">LESSON · 08</div>
+      <h1>AI 长出<br>眼睛、耳朵<br>和<span class="accent">声音</span></h1>
+      <p class="slogan">多模态：从 CLIP 到 Sora，从语音到 3D。</p>
+    </section>
+
+    <section class="hero">
+      <h1>同一<br>语义<br><span class="accent">空间</span></h1>
+      <p class="fragment fade-up">把图片、文字、音频映射到一个向量空间。</p>
+    </section>
+
+    <section class="list">
+      <h2>CLIP · 奠基工作</h2>
+      <ul>
+        <li class="fragment">2021, OpenAI</li>
+        <li class="fragment">4 亿组 (图, 文) 对训练</li>
+        <li class="fragment"><strong>对比学习</strong>：相关的拉近、不相关的拉远</li>
+        <li class="fragment">奠定"图文对齐"的基础</li>
+        <li class="fragment accent">→ Stable Diffusion / DALL-E 等都基于 CLIP</li>
+      </ul>
+    </section>
+
+    <section class="hero">
+      <h1>扩散<br>模型<br><span class="accent">DM</span></h1>
+      <p class="fragment fade-up">从纯噪声反推出图像。</p>
+    </section>
+
+    <section class="terminal">
+      <h2>diffusion intuition</h2>
+<pre><code class="language-text" data-trim>
+正向过程: 图像 → 加噪声 → 加噪声 → ... → 纯噪声
+反向过程: 纯噪声 → 去噪 → 去噪 → ... → 图像
+
+训练目标: 让模型学会"在 t 步该去多少噪声"
+推理过程: 从随机噪声出发，迭代去噪 25-50 步
+</code></pre>
+    </section>
+
+    <section class="list">
+      <h2>Stable Diffusion · 开源王者</h2>
+      <ul>
+        <li class="fragment"><strong>Latent Diffusion</strong>：在隐空间扩散，省算力</li>
+        <li class="fragment"><strong>U-Net + CLIP 文本条件</strong></li>
+        <li class="fragment">SD 1.5 / SDXL / SD 3 几代演进</li>
+        <li class="fragment">FLUX 是其精神继承者</li>
+        <li class="fragment"><strong>LoRA + ControlNet</strong> 生态爆炸</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>ControlNet · 精确控制</h2>
+      <ul>
+        <li class="fragment">问题：纯文本难控制构图</li>
+        <li class="fragment">方案：再喂一张"条件图"（边缘 / 姿态 / 深度）</li>
+        <li class="fragment">让 AI 按照你给的轮廓画</li>
+        <li class="fragment">设计师 / 漫画家 的福音</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>闭源标杆</h2>
+      <ul>
+        <li class="fragment"><strong>Midjourney</strong> · 美学统治者</li>
+        <li class="fragment"><strong>DALL-E 3</strong> · 文本理解最强</li>
+        <li class="fragment"><strong>Imagen 3</strong> · Google 出品</li>
+        <li class="fragment"><strong>Ideogram</strong> · 文字渲染好</li>
+      </ul>
+    </section>
+
+    <section class="hero">
+      <h1>视频<br><span class="accent">爆发</span></h1>
+      <p class="fragment fade-up">2024 是文生视频的"GPT 时刻"。</p>
+    </section>
+
+    <section class="list">
+      <h2>视频生成代表</h2>
+      <ul>
+        <li class="fragment"><strong>Sora</strong> · OpenAI · 1 分钟级别</li>
+        <li class="fragment"><strong>Veo 3</strong> · Google · 同步音效</li>
+        <li class="fragment"><strong>Kling</strong> · 快手 · 国产代表</li>
+        <li class="fragment"><strong>Hailuo / Vidu / Runway</strong> · 各显神通</li>
+        <li class="fragment mute">技术：DiT（Diffusion Transformer）</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>多模态 LLM</h2>
+      <ul>
+        <li class="fragment"><strong>GPT-4V / 4o</strong> · 视觉旗舰</li>
+        <li class="fragment"><strong>Claude 3.5 Sonnet</strong> · 图表与 OCR 之王</li>
+        <li class="fragment"><strong>Gemini 2</strong> · 原生多模态</li>
+        <li class="fragment"><strong>Qwen-VL / InternVL</strong> · 开源代表</li>
+        <li class="fragment accent">→ 截图 + 提问 已成为新工作流</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>视觉理解能力</h2>
+      <ul>
+        <li class="fragment"><strong>OCR</strong> · 票据、表格、手写</li>
+        <li class="fragment"><strong>图表理解</strong> · 看图说数据</li>
+        <li class="fragment"><strong>VQA</strong> · 视觉问答</li>
+        <li class="fragment"><strong>UI 理解</strong> · GUI 自动化（Computer Use）</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>语音生态</h2>
+      <ul>
+        <li class="fragment"><strong>Whisper</strong> · 多语言 ASR 标杆</li>
+        <li class="fragment"><strong>TTS</strong> · ElevenLabs / OpenAI / 字节火山</li>
+        <li class="fragment"><strong>实时对话</strong> · GPT-4o Voice / Realtime API</li>
+        <li class="fragment"><strong>歌声合成</strong> · Suno / Udio</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>3D 与新兴方向</h2>
+      <ul>
+        <li class="fragment"><strong>Gaussian Splatting</strong> · 3D 重建新范式</li>
+        <li class="fragment"><strong>Tripo / Meshy / Hunyuan3D</strong> · 文/图生 3D</li>
+        <li class="fragment"><strong>NeRF</strong> · 神经辐射场</li>
+        <li class="fragment"><strong>世界模型</strong> · Genie / SIMA</li>
+      </ul>
+    </section>
+
+    <section class="summary">
+      <h2>本课收获</h2>
+      <div class="keywords">
+        <span class="kw">CLIP 对齐</span>
+        <span class="kw">扩散模型</span>
+        <span class="kw">SD + ControlNet</span>
+        <span class="kw">Sora 视频</span>
+        <span class="kw">多模态 LLM</span>
+        <span class="kw">语音 / 3D</span>
+      </div>
+      <p class="next">下一课 · <strong>AI Coding 实战：程序员的形态正在改变</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="../../assets/js/common.js"></script>
+<script>initLesson();</script>
+</body>
+</html>

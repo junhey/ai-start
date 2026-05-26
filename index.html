@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI START ⚡ 给开发者的 AI 课程</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Inter', 'Noto Sans SC', sans-serif;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* === Hero === */
+    .hero {
+      min-height: 100vh;
+      padding: 8vh 6vw 4vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      letter-spacing: 0.3em;
+      color: #FF3366;
+    }
+    .hero-title {
+      font-weight: 900;
+      font-size: 18vw;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      margin: 6vh 0 2vh;
+    }
+    .hero-title .red { color: #FF3366; }
+    .hero-title .gradient {
+      background: linear-gradient(135deg, #FF3366, #FFD93D, #06FFA5, #00D9FF, #C084FC);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: clamp(20px, 2.4vw, 36px);
+      color: #888;
+      max-width: 900px;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    .hero-sub strong { color: #fff; font-weight: 900; }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2em;
+      margin-top: 4vh;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      color: #666;
+      text-transform: uppercase;
+    }
+    .hero-meta span strong { color: #FF3366; font-weight: 700; }
+
+    /* === Section === */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      color: #FF3366;
+      padding: 8vh 6vw 2vh;
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-weight: 900;
+      font-size: clamp(48px, 8vw, 120px);
+      line-height: 0.95;
+      padding: 0 6vw 4vh;
+      letter-spacing: -0.03em;
+    }
+
+    /* === Course Grid === */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+      padding: 0 6vw 8vh;
+    }
+    .card {
+      position: relative;
+      padding: 32px 28px;
+      border-radius: 16px;
+      background: #111;
+      border: 2px solid #222;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--card-color);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-color);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .card:hover::before { opacity: 0.08; }
+    .card > * { position: relative; z-index: 1; }
+    .card-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      color: var(--card-color);
+      font-weight: 700;
+    }
+    .card-title {
+      font-weight: 900;
+      font-size: 36px;
+      line-height: 1.05;
+      margin: 16px 0 12px;
+      letter-spacing: -0.02em;
+    }
+    .card-desc {
+      color: #888;
+      font-size: 15px;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #222;
+    }
+    .card-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--card-color);
+      color: #000;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      border-radius: 4px;
+    }
+    .card-arrow {
+      color: var(--card-color);
+      font-size: 24px;
+      font-weight: 900;
+      transition: transform 0.3s ease;
+    }
+    .card:hover .card-arrow { transform: translateX(6px); }
+
+    /* coming soon 标记 */
+    .card.todo { opacity: 0.55; }
+    .card.todo .card-tag { background: #555; color: #ccc; }
+    .card.todo:hover { transform: none; box-shadow: none; }
+
+    /* === Footer === */
+    footer {
+      padding: 6vh 6vw;
+      border-top: 1px solid #222;
+      color: #666;
+      font-size: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+    footer a { color: #FF3366; }
+
+    /* === Marquee 跑马灯（hero 底部）=== */
+    .marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 1em 0;
+      border-top: 1px solid #222;
+      border-bottom: 1px solid #222;
+      margin-top: 4vh;
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      color: #444;
+    }
+    .marquee-track span { margin: 0 2em; }
+    .marquee-track .hi { color: #FF3366; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 640px) {
+      .hero-title { font-size: 22vw; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="brand">AI START · v0.1</div>
+
+    <div>
+      <h1 class="hero-title">
+        AI<br>
+        <span class="gradient">START</span><br>
+        <span class="red">.</span>
+      </h1>
+      <p class="hero-sub">
+        给<strong>技术开发者</strong>的 AI 入门课程。<br>
+        从 LLM 原理到 Agent，从 Prompt 到 RAG，<br>
+        <strong>10 节课</strong>，看懂这场技术革命。
+      </p>
+      <div class="hero-meta">
+        <span><strong>10</strong> 节课</span>
+        <span><strong>~128</strong> 张幻灯片</span>
+        <span><strong>HTML</strong> 纯静态</span>
+        <span><strong>Reveal.js</strong> 驱动</span>
+      </div>
+    </div>
+
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>LLM</span><span class="hi">→</span>
+        <span>TRANSFORMER</span><span class="hi">→</span>
+        <span>PROMPT</span><span class="hi">→</span>
+        <span>RAG</span><span class="hi">→</span>
+        <span>AGENT</span><span class="hi">→</span>
+        <span>FINE-TUNING</span><span class="hi">→</span>
+        <span>MULTIMODAL</span><span class="hi">→</span>
+        <span>AI CODING</span><span class="hi">→</span>
+        <span>AGI</span><span class="hi">→</span>
+        <span>LLM</span><span class="hi">→</span>
+        <span>TRANSFORMER</span><span class="hi">→</span>
+        <span>PROMPT</span><span class="hi">→</span>
+        <span>RAG</span><span class="hi">→</span>
+        <span>AGENT</span><span class="hi">→</span>
+        <span>FINE-TUNING</span><span class="hi">→</span>
+        <span>MULTIMODAL</span><span class="hi">→</span>
+        <span>AI CODING</span><span class="hi">→</span>
+        <span>AGI</span><span class="hi">→</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Courses -->
+  <div class="section-label">// COURSE LIST</div>
+  <h2 class="section-title">十节课<br>看懂 AI</h2>
+
+  <div class="grid">
+    <a class="card" style="--card-color:#FF3366" href="lessons/01-ai-overview/index.html">
+      <div class="card-num">LESSON · 01</div>
+      <h3 class="card-title">AI 全景图</h3>
+      <p class="card-desc">从 1956 到 GPT 时刻，70 年简史 + 现状版图。把这场技术浪潮放进时间线里看。</p>
+      <div class="card-bottom"><span class="card-tag">基础</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#00D9FF" href="lessons/02-llm-principles/index.html">
+      <div class="card-num">LESSON · 02</div>
+      <h3 class="card-title">LLM 原理速通</h3>
+      <p class="card-desc">Token、词嵌入、自回归、三段式训练。LLM 究竟是怎么学会"对话"的。</p>
+      <div class="card-bottom"><span class="card-tag">原理</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#FFD93D" href="lessons/03-transformer/index.html">
+      <div class="card-num">LESSON · 03</div>
+      <h3 class="card-title">Transformer 架构</h3>
+      <p class="card-desc">Attention is All You Need。从 Self-Attention 到多头到位置编码，一次看穿。</p>
+      <div class="card-bottom"><span class="card-tag">架构</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#06FFA5" href="lessons/04-prompt-engineering/index.html">
+      <div class="card-num">LESSON · 04</div>
+      <h3 class="card-title">Prompt 工程</h3>
+      <p class="card-desc">CoT、ReAct、结构化输出、注入防御。好的 Prompt = 半个产品。</p>
+      <div class="card-bottom"><span class="card-tag">工程</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#FF6B35" href="lessons/05-rag/index.html">
+      <div class="card-num">LESSON · 05</div>
+      <h3 class="card-title">RAG 检索增强</h3>
+      <p class="card-desc">Embedding、向量库、Chunking、Re-rank。把外部知识塞进 LLM 的标准方案。</p>
+      <div class="card-bottom"><span class="card-tag">实战</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#C084FC" href="lessons/06-agent/index.html">
+      <div class="card-num">LESSON · 06</div>
+      <h3 class="card-title">Agent 智能体</h3>
+      <p class="card-desc">ReAct、Tool Use、MCP、多 Agent 协作。让 LLM 自己干活。</p>
+      <div class="card-bottom"><span class="card-tag">进阶</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#EC4899" href="lessons/07-fine-tuning/index.html">
+      <div class="card-num">LESSON · 07</div>
+      <h3 class="card-title">微调与训练</h3>
+      <p class="card-desc">LoRA、QLoRA、DPO、PEFT。什么时候该微调、什么时候不该。</p>
+      <div class="card-bottom"><span class="card-tag">进阶</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#A78BFA" href="lessons/08-multimodal/index.html">
+      <div class="card-num">LESSON · 08</div>
+      <h3 class="card-title">多模态 AI</h3>
+      <p class="card-desc">CLIP、扩散模型、Sora、Whisper。AI 长出眼睛、耳朵和声音。</p>
+      <div class="card-bottom"><span class="card-tag">扩展</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#10B981" href="lessons/09-ai-coding/index.html">
+      <div class="card-num">LESSON · 09</div>
+      <h3 class="card-title">AI Coding 实战</h3>
+      <p class="card-desc">Copilot、Cursor、Claude Code、CodeBuddy。程序员形态正在改变。</p>
+      <div class="card-bottom"><span class="card-tag">实战</span><span class="card-arrow">→</span></div>
+    </a>
+
+    <a class="card" style="--card-color:#DC2626" href="lessons/10-ethics-future/index.html">
+      <div class="card-num">LESSON · 10</div>
+      <h3 class="card-title">伦理、风险与未来</h3>
+      <p class="card-desc">对齐、偏见、监管、AGI 路线图。这次真的不一样。</p>
+      <div class="card-bottom"><span class="card-tag">思辨</span><span class="card-arrow">→</span></div>
+    </a>
+  </div>
+
+  <footer>
+    <div>AI START · MIT License · 2025</div>
+    <div>
+      <a href="https://github.com/junhey/ai-start" target="_blank">GitHub</a>
+      &nbsp;·&nbsp;
+      <a href="docs/COURSE_OUTLINE.md" target="_blank">详细大纲</a>
+    </div>
+  </footer>
+</body>
+</html>

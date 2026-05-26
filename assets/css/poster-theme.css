@@ -1,0 +1,502 @@
+/* =========================================================
+   AI Start · Poster Theme
+   大字报风格主题（基于 Reveal.js 5）
+   注意：Reveal 默认舞台 960×700。一律使用 em，避免 vw/vh
+   导致内容跑出舞台边界。
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
+:root {
+  --poster-accent: #FF3366;
+  --poster-bg: #0a0a0a;
+  --poster-fg: #ffffff;
+  --poster-mute: #888;
+  --poster-code-bg: #1a1a1a;
+  --poster-font-zh: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --poster-font-en: 'Inter', system-ui, sans-serif;
+  --poster-font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+}
+
+/* === 全局基底 === */
+.reveal {
+  font-family: var(--poster-font-en), var(--poster-font-zh);
+  font-weight: 500;
+  background: var(--poster-bg);
+  color: var(--poster-fg);
+  letter-spacing: -0.01em;
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+/* 让每张 section 自己管理布局，并强制内容不溢出 */
+.reveal .slides > section,
+.reveal .slides > section > section {
+  height: 100%;
+  width: 100%;
+  padding: 1.4em 1.6em;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;          /* 兜底防止内容溢出 */
+}
+
+.reveal section {
+  font-size: 30px;            /* 基准字号，所有 em 相对于此 */
+  line-height: 1.4;
+}
+
+.reveal section > * {
+  max-width: 100%;
+}
+
+/* === 标题 === */
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: var(--poster-font-en), var(--poster-font-zh);
+  font-weight: 900;
+  text-transform: none;
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--poster-fg);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.reveal h1 { font-size: 4.6em; }
+.reveal h2 { font-size: 3em; }
+.reveal h3 { font-size: 2em; }
+.reveal h4 { font-size: 1.4em; }
+
+/* === 段落 / 列表 === */
+.reveal p {
+  margin: 0.5em 0;
+  font-size: 1em;
+}
+
+.reveal ul, .reveal ol {
+  display: block;
+  margin: 0.5em 0;
+  padding-left: 1em;
+}
+
+.reveal li {
+  margin: 0.25em 0;
+}
+
+/* === 重点元素 === */
+.reveal strong, .reveal b {
+  color: var(--poster-accent);
+  font-weight: 900;
+}
+
+.reveal em {
+  color: var(--poster-accent);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.reveal a {
+  color: var(--poster-accent);
+  text-decoration: underline;
+}
+
+/* === 代码 === */
+.reveal code {
+  font-family: var(--poster-font-mono);
+  background: var(--poster-code-bg);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.reveal pre {
+  width: 100%;
+  font-size: 0.55em;
+  margin: 0.5em 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  border-radius: 8px;
+}
+
+.reveal pre code {
+  display: block;
+  padding: 1em;
+  background: var(--poster-code-bg);
+  font-family: var(--poster-font-mono);
+  line-height: 1.5;
+  max-height: 100%;
+  border-radius: 8px;
+  overflow: auto;
+  white-space: pre;
+}
+
+/* === 引用 === */
+.reveal blockquote {
+  background: transparent;
+  border-left: 0.4em solid var(--poster-accent);
+  padding: 0.4em 1em;
+  margin: 0.8em 0;
+  font-style: italic;
+  font-size: 1.15em;
+  box-shadow: none;
+}
+
+/* === 表格 === */
+.reveal table {
+  margin: 0.5em auto;
+  border-collapse: collapse;
+  font-size: 0.7em;
+  width: 100%;
+}
+
+.reveal table th,
+.reveal table td {
+  padding: 0.35em 0.7em;
+  border-bottom: 1px solid #333;
+  text-align: left;
+}
+
+.reveal table th {
+  color: var(--poster-accent);
+  font-weight: 900;
+  border-bottom: 3px solid var(--poster-accent);
+}
+
+/* =========================================================
+   大字报版式：Slide Templates
+   尺度全部基于 em（约 30px 基准），保证不溢出舞台
+   ========================================================= */
+
+/* --- 封面页 cover --- */
+.reveal section.cover {
+  background: var(--poster-bg);
+}
+.reveal section.cover h1 {
+  font-size: 5.2em;
+  line-height: 0.95;
+  color: var(--poster-fg);
+}
+.reveal section.cover h1 .accent {
+  color: var(--poster-accent);
+}
+.reveal section.cover .episode {
+  font-family: var(--poster-font-mono);
+  font-size: 1.1em;
+  color: var(--poster-accent);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.6em;
+  text-transform: uppercase;
+}
+.reveal section.cover .slogan {
+  font-size: 1.2em;
+  color: var(--poster-mute);
+  margin-top: 0.8em;
+  font-weight: 500;
+}
+
+/* --- 巨大标题页 hero --- */
+.reveal section.hero h1 {
+  font-size: 5.8em;
+  line-height: 0.92;
+  color: var(--poster-accent);
+}
+.reveal section.hero p {
+  font-size: 1.4em;
+  margin-top: 0.8em;
+  color: var(--poster-fg);
+}
+
+/* --- 数字页 number --- */
+.reveal section.number {
+  text-align: center;
+  align-items: center;
+}
+.reveal section.number .num {
+  font-size: 9em;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--poster-accent);
+  font-family: var(--poster-font-en);
+}
+.reveal section.number .label {
+  font-size: 1.6em;
+  color: var(--poster-fg);
+  margin-top: 0.3em;
+}
+
+/* --- 金句页 quote --- */
+.reveal section.quote {
+  position: relative;
+  text-align: left;
+}
+.reveal section.quote::before {
+  content: '"';
+  position: absolute;
+  top: -0.1em;
+  left: 0.2em;
+  font-size: 14em;
+  color: var(--poster-accent);
+  opacity: 0.18;
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  pointer-events: none;
+}
+.reveal section.quote .saying {
+  position: relative;
+  font-size: 2.6em;
+  line-height: 1.1;
+  font-weight: 900;
+  color: var(--poster-fg);
+}
+.reveal section.quote .author {
+  position: relative;
+  font-size: 1.1em;
+  margin-top: 0.6em;
+  color: var(--poster-mute);
+}
+.reveal section.quote .author::before {
+  content: '— ';
+}
+
+/* --- 过渡章节页 chapter --- */
+.reveal section.chapter .ch-num {
+  font-family: var(--poster-font-mono);
+  font-size: 1.2em;
+  color: var(--poster-accent);
+  letter-spacing: 0.2em;
+}
+.reveal section.chapter h2 {
+  font-size: 5em;
+  margin-top: 0.2em;
+  color: var(--poster-fg);
+  line-height: 0.95;
+}
+
+/* --- 列表页 list --- */
+.reveal section.list h2 {
+  font-size: 2em;
+  color: var(--poster-accent);
+  margin-bottom: 0.4em;
+}
+.reveal section.list ul {
+  list-style: none;
+  padding: 0;
+}
+.reveal section.list ul li {
+  font-size: 1.05em;
+  padding: 0.25em 0;
+  border-bottom: 2px solid #222;
+  display: flex;
+  align-items: flex-start;
+}
+.reveal section.list ul li::before {
+  content: '→';
+  color: var(--poster-accent);
+  font-weight: 900;
+  margin-right: 0.5em;
+  font-size: 1em;
+  flex-shrink: 0;
+}
+
+/* --- 对比页 vs --- */
+.reveal section.vs h2 {
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 0.4em;
+}
+.reveal section.vs .vs-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1em;
+  align-items: stretch;
+}
+.reveal section.vs .vs-side {
+  padding: 0.8em;
+  border: 3px solid #333;
+  border-radius: 10px;
+}
+.reveal section.vs .vs-side.left { border-color: var(--poster-accent); }
+.reveal section.vs .vs-side.right { border-color: var(--poster-fg); }
+.reveal section.vs .vs-side h3 {
+  font-size: 1.4em;
+  margin-bottom: 0.3em;
+}
+.reveal section.vs .vs-side ul {
+  list-style: none;
+  padding: 0;
+  font-size: 0.85em;
+  margin: 0;
+}
+.reveal section.vs .vs-side li {
+  padding: 0.15em 0;
+}
+.reveal section.vs .vs-mark {
+  font-size: 2.6em;
+  font-weight: 900;
+  color: var(--poster-accent);
+  align-self: center;
+  text-align: center;
+}
+
+/* --- 终端代码页 terminal --- */
+.reveal section.terminal {
+  background: #000;
+}
+.reveal section.terminal h2 {
+  color: #00FF88;
+  font-family: var(--poster-font-mono);
+  font-size: 1.4em;
+  margin-bottom: 0.5em;
+}
+.reveal section.terminal h2::before {
+  content: '$ ';
+  color: var(--poster-accent);
+}
+
+/* --- 总结页 summary --- */
+.reveal section.summary h2 {
+  font-size: 2.4em;
+  color: var(--poster-accent);
+  margin-bottom: 0.4em;
+}
+.reveal section.summary .keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin: 0.6em 0;
+}
+.reveal section.summary .kw {
+  font-size: 1em;
+  font-weight: 900;
+  background: var(--poster-accent);
+  color: #000;
+  padding: 0.25em 0.7em;
+  border-radius: 999px;
+}
+.reveal section.summary .next {
+  font-size: 1.1em;
+  margin-top: 1em;
+  color: var(--poster-mute);
+}
+.reveal section.summary .next strong {
+  color: var(--poster-fg);
+}
+
+/* =========================================================
+   每课主题色覆盖
+   ========================================================= */
+
+body.lesson-01 { --poster-accent: #FF3366; --poster-bg: #0a0a0a; }
+body.lesson-02 { --poster-accent: #00D9FF; --poster-bg: #001428; }
+body.lesson-03 { --poster-accent: #FFD93D; --poster-bg: #1a0d2e; }
+body.lesson-04 { --poster-accent: #06FFA5; --poster-bg: #000000; }
+body.lesson-05 { --poster-accent: #FF6B35; --poster-bg: #1a1410; }
+body.lesson-06 { --poster-accent: #C084FC; --poster-bg: #0f0a1a; }
+body.lesson-07 { --poster-accent: #EC4899; --poster-bg: #0a0a0a; }
+body.lesson-08 { --poster-accent: #A78BFA; --poster-bg: #0c0a1f; }
+body.lesson-09 { --poster-accent: #10B981; --poster-bg: #050a08; }
+body.lesson-10 { --poster-accent: #DC2626; --poster-bg: #0a0a0a; }
+
+/* === 控件颜色 === */
+.reveal .controls {
+  color: var(--poster-accent);
+}
+.reveal .progress {
+  color: var(--poster-accent);
+  height: 6px;
+}
+.reveal .slide-number {
+  font-family: var(--poster-font-mono);
+  background: transparent;
+  font-size: 16px;
+  color: var(--poster-mute);
+}
+
+/* === Fragment 动效微调 === */
+.reveal .fragment.scale-up {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 0.5s ease;
+}
+.reveal .fragment.scale-up.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* === 工具类 === */
+.reveal .accent { color: var(--poster-accent); }
+.reveal .mute { color: var(--poster-mute); }
+.reveal .mono { font-family: var(--poster-font-mono); }
+.reveal .huge { font-size: 1.4em; }
+.reveal .xhuge { font-size: 2em; font-weight: 900; }
+.reveal .tag {
+  display: inline-block;
+  padding: 0.15em 0.5em;
+  background: var(--poster-accent);
+  color: #000;
+  font-weight: 900;
+  border-radius: 6px;
+  font-size: 0.7em;
+  margin-right: 0.4em;
+  vertical-align: middle;
+}
+
+/* === 网格 === */
+.reveal .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+.reveal .grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.8em;
+}
+.reveal .grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6em;
+}
+
+/* === 卡片 === */
+.reveal .card {
+  padding: 0.8em;
+  border: 3px solid var(--poster-accent);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+}
+.reveal .card h4 {
+  color: var(--poster-accent);
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+}
+.reveal .card p {
+  font-size: 0.7em;
+  margin: 0;
+  color: var(--poster-mute);
+}
+
+/* === 顶部回到门户 === */
+.home-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  font-family: var(--poster-font-mono);
+  font-size: 12px;
+  color: var(--poster-accent);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 2px solid var(--poster-accent);
+  border-radius: 6px;
+  background: rgba(0,0,0,0.5);
+  letter-spacing: 0.1em;
+}
+.home-link:hover {
+  background: var(--poster-accent);
+  color: #000;
+}

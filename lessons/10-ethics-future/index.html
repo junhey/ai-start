@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 · 伦理、风险与未来 | AI START</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+</head>
+<body class="lesson-10">
+
+<div class="reveal">
+  <div class="slides">
+
+    <section class="cover">
+      <div class="episode">LESSON · 10</div>
+      <h1>这次<br>真的<br><span class="accent">不一样</span></h1>
+      <p class="slogan">伦理、风险与未来：作为从业者的态度。</p>
+    </section>
+
+    <section class="hero">
+      <h1>对齐<br><span class="accent">问题</span></h1>
+      <p class="fragment fade-up">让强大的智能体做"我们想要"的事，比想象中难。</p>
+    </section>
+
+    <section class="list">
+      <h2>对齐为什么难</h2>
+      <ul>
+        <li class="fragment"><strong>目标错位</strong>：训练目标 ≠ 真实意图</li>
+        <li class="fragment"><strong>奖励黑客</strong>：模型钻规则漏洞</li>
+        <li class="fragment"><strong>泛化失败</strong>：训练分布外失效</li>
+        <li class="fragment"><strong>欺骗倾向</strong>：装作对齐却另有目的</li>
+        <li class="fragment accent">→ 这是 AI 安全的核心议题</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>偏见与歧视</h2>
+      <ul>
+        <li class="fragment">训练数据 = 互联网现实</li>
+        <li class="fragment">现实有偏见 → 模型有偏见</li>
+        <li class="fragment">性别、种族、地域、职业…</li>
+        <li class="fragment">RLHF 缓解但难根治</li>
+        <li class="fragment mute">"算法没情绪，但算法有立场"</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>版权争议</h2>
+      <ul>
+        <li class="fragment">训练数据合法性持续诉讼</li>
+        <li class="fragment">NYT vs OpenAI / 出版商 vs Anthropic…</li>
+        <li class="fragment">"合理使用"vs"剽窃"边界模糊</li>
+        <li class="fragment">输出端：AI 创作的版权归谁</li>
+        <li class="fragment mute">未来 5 年关键判例期</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>隐私与数据泄漏</h2>
+      <ul>
+        <li class="fragment"><strong>提示词泄漏</strong>：商业机密喂进了别人的训练集</li>
+        <li class="fragment"><strong>训练数据反推</strong>：能从模型里"挤出"原文</li>
+        <li class="fragment"><strong>员工误用</strong>：把代码 / 客户数据贴进公网模型</li>
+        <li class="fragment accent">→ 私有部署 / 数据脱敏 / 使用规范</li>
+      </ul>
+    </section>
+
+    <section class="hero">
+      <h1>失业<br><span class="accent">浪潮?</span></h1>
+      <p class="fragment fade-up">不是 AI 取代人，是会用 AI 的人取代不会的人。</p>
+    </section>
+
+    <section class="list">
+      <h2>谁最受冲击</h2>
+      <ul>
+        <li class="fragment"><strong>初级</strong>：客服、文案、初级编程、基础翻译</li>
+        <li class="fragment"><strong>中级</strong>：分析师、设计、运营、教研</li>
+        <li class="fragment"><strong>高级</strong>：放大产能（不是替代）</li>
+        <li class="fragment"><strong>蓝领</strong>：暂时安全（机器人滞后）</li>
+        <li class="fragment mute">"AGI 可能比 AGI 机器人先来"</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>深度伪造</h2>
+      <ul>
+        <li class="fragment">AI 配音 + AI 换脸 + AI 生成视频</li>
+        <li class="fragment">总统讲话、亲属求救、明星代言</li>
+        <li class="fragment">信息真实性 → 公共危机</li>
+        <li class="fragment">解药：水印、来源认证（C2PA）、媒体素养</li>
+      </ul>
+    </section>
+
+    <section class="list">
+      <h2>AGI 路线图</h2>
+      <ul>
+        <li class="fragment"><strong>OpenAI L1-L5</strong>：聊天 → 推理 → 自主行动 → 创新 → 组织</li>
+        <li class="fragment"><strong>DeepMind</strong>：窄域 / 通用 × 1-5 级</li>
+        <li class="fragment">大多数玩家声称：2027-2030 进入"L4"</li>
+        <li class="fragment">学界：怀疑论 vs 加速派</li>
+        <li class="fragment mute">没人真的知道，但都在押注</li>
+      </ul>
+    </section>
+
+    <section class="vs">
+      <h2>开源 vs 闭源</h2>
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <h3>闭源派</h3>
+          <ul>
+            <li>安全可控</li>
+            <li>商业可持续</li>
+            <li>OpenAI / Anthropic</li>
+          </ul>
+        </div>
+        <div class="vs-mark">VS</div>
+        <div class="vs-side right">
+          <h3>开源派</h3>
+          <ul>
+            <li>普惠民主化</li>
+            <li>可审计可改</li>
+            <li>Meta / DeepSeek / Qwen</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="list">
+      <h2>监管动向</h2>
+      <ul>
+        <li class="fragment"><strong>EU AI Act</strong> · 全球最严格分级</li>
+        <li class="fragment"><strong>美国行政令</strong> · 透明度 + 评估</li>
+        <li class="fragment"><strong>中国生成式 AI 办法</strong> · 备案 + 内容合规</li>
+        <li class="fragment"><strong>Bletchley 宣言</strong> · 各国 AI 安全峰会</li>
+        <li class="fragment mute">监管落后技术 2-3 年是常态</li>
+      </ul>
+    </section>
+
+    <section class="quote">
+      <p class="saying">拥抱<br>变化<br>是<span class="accent">唯一</span><br>的护城河。</p>
+      <p class="author">献给所有从业者</p>
+    </section>
+
+    <section class="list">
+      <h2>给开发者的建议</h2>
+      <ul>
+        <li class="fragment"><strong>每天用</strong>：把 AI 当默认协作者</li>
+        <li class="fragment"><strong>多动手</strong>：跑过比看过更重要</li>
+        <li class="fragment"><strong>学原理</strong>：底层认知比工具技巧耐久</li>
+        <li class="fragment"><strong>建产品</strong>：用 AI 做点真东西出来</li>
+        <li class="fragment"><strong>保持质疑</strong>：不当 AI 的传话筒</li>
+        <li class="fragment accent">→ 你不需要赶超 AI，你只需要走在用 AI 的人前面</li>
+      </ul>
+    </section>
+
+    <section class="summary">
+      <h2>课程收尾</h2>
+      <div class="keywords">
+        <span class="kw">对齐</span>
+        <span class="kw">偏见 / 版权 / 隐私</span>
+        <span class="kw">失业再分配</span>
+        <span class="kw">AGI 路线图</span>
+        <span class="kw">监管</span>
+        <span class="kw">从业者态度</span>
+      </div>
+      <p class="next">10 节课 · <strong>从今天开始，去做点什么。</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="../../assets/js/common.js"></script>
+<script>initLesson();</script>
+</body>
+</html>
