@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
   <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
 </head>
 <body class="lesson-05">
 
@@ -42,15 +43,68 @@
     <section class="terminal">
       <aside class="notes">现场画一遍 pipeline 示意图。让听众明确：RAG 不是'让 LLM 联网搜索'那么简单。</aside>
       <h2>rag pipeline</h2>
-<pre><code class="language-text" data-trim>
-[ 离线 INDEX ]
-  文档 → 切块 chunks → 向量化 embeddings → 存向量库
-
-[ 在线 QUERY ]
-  问题 → 向量化 → 向量检索 top-k → 组装 prompt → LLM
-                                     ↑
-                            "根据下面资料回答…"
-</code></pre>
+      <svg class="svg-diagram" viewBox="0 0 900 380" style="max-width:100%;height:auto">
+        <!-- 离线 INDEX -->
+        <text x="20" y="30" fill="#FF6B35" font-size="14" font-weight="900" font-family="monospace">[ 离线 INDEX ]</text>
+        <rect x="20" y="45" width="120" height="50" rx="8" fill="#222" stroke="#FF6B35" stroke-width="2"/>
+        <text x="80" y="75" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">📄 文档</text>
+        
+        <line x1="140" y1="70" x2="190" y2="70" stroke="#FF6B35" stroke-width="2" class="flow-line" style="stroke-dasharray:50;animation-delay:0.3s"/>
+        <polygon points="185,65 195,70 185,75" fill="#FF6B35"/>
+        
+        <rect x="195" y="45" width="120" height="50" rx="8" fill="#222" stroke="#FF6B35" stroke-width="2"/>
+        <text x="255" y="75" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">✂️ 切块</text>
+        
+        <line x1="315" y1="70" x2="365" y2="70" stroke="#FF6B35" stroke-width="2" class="flow-line" style="stroke-dasharray:50;animation-delay:0.6s"/>
+        <polygon points="360,65 370,70 360,75" fill="#FF6B35"/>
+        
+        <rect x="370" y="45" width="130" height="50" rx="8" fill="#222" stroke="#FF6B35" stroke-width="2"/>
+        <text x="435" y="75" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">🔢 向量化</text>
+        
+        <line x1="500" y1="70" x2="550" y2="70" stroke="#FF6B35" stroke-width="2" class="flow-line" style="stroke-dasharray:50;animation-delay:0.9s"/>
+        <polygon points="545,65 555,70 545,75" fill="#FF6B35"/>
+        
+        <rect x="555" y="45" width="130" height="50" rx="8" fill="#FF6B3522" stroke="#FF6B35" stroke-width="3"/>
+        <text x="620" y="75" fill="#FF6B35" font-size="14" text-anchor="middle" font-weight="900">🗄️ 向量库</text>
+        
+        <!-- 在线 QUERY -->
+        <text x="20" y="160" fill="#00D9FF" font-size="14" font-weight="900" font-family="monospace">[ 在线 QUERY ]</text>
+        <rect x="20" y="175" width="120" height="50" rx="8" fill="#222" stroke="#00D9FF" stroke-width="2"/>
+        <text x="80" y="205" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">❓ 问题</text>
+        
+        <line x1="140" y1="200" x2="190" y2="200" stroke="#00D9FF" stroke-width="2" class="flow-line" style="stroke-dasharray:50;animation-delay:1.2s"/>
+        <polygon points="185,195 195,200 185,205" fill="#00D9FF"/>
+        
+        <rect x="195" y="175" width="130" height="50" rx="8" fill="#222" stroke="#00D9FF" stroke-width="2"/>
+        <text x="260" y="205" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">🔢 向量化</text>
+        
+        <line x1="325" y1="200" x2="375" y2="200" stroke="#00D9FF" stroke-width="2" class="flow-line" style="stroke-dasharray:50;animation-delay:1.5s"/>
+        <polygon points="370,195 380,200 370,205" fill="#00D9FF"/>
+        
+        <rect x="380" y="175" width="130" height="50" rx="8" fill="#222" stroke="#00D9FF" stroke-width="2"/>
+        <text x="445" y="205" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">🔍 检索 Top-K</text>
+        
+        <!-- 连线到向量库 -->
+        <path d="M 620 95 L 620 140 L 445 140 L 445 175" stroke="#FF6B35" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+        <text x="540" y="138" fill="#666" font-size="11">匹配</text>
+        
+        <line x1="510" y1="200" x2="560" y2="200" stroke="#00D9FF" stroke-width="2" class="flow-line" style="stroke-dasharray:50;animation-delay:1.8s"/>
+        <polygon points="555,195 565,200 555,205" fill="#00D9FF"/>
+        
+        <rect x="565" y="175" width="150" height="50" rx="8" fill="#222" stroke="#00D9FF" stroke-width="2"/>
+        <text x="640" y="205" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">📝 组装 Prompt</text>
+        
+        <line x1="640" y1="225" x2="640" y2="270" stroke="#00D9FF" stroke-width="2" class="flow-line" style="stroke-dasharray:50;animation-delay:2.1s"/>
+        <polygon points="635,265 640,275 645,265" fill="#00D9FF"/>
+        
+        <!-- LLM -->
+        <rect x="555" y="275" width="150" height="60" rx="12" fill="#00D9FF22" stroke="#00D9FF" stroke-width="3" class="pulse"/>
+        <text x="630" y="310" fill="#00D9FF" font-size="16" text-anchor="middle" font-weight="900">🧠 LLM</text>
+        
+        <line x1="640" y1="335" x2="640" y2="365" stroke="#06FFA5" stroke-width="3" class="flow-line" style="stroke-dasharray:30;animation-delay:2.4s"/>
+        <polygon points="635,360 640,370 645,360" fill="#06FFA5"/>
+        <text x="640" y="380" fill="#06FFA5" font-size="14" text-anchor="middle" font-weight="900">✅ 带引用的答案</text>
+      </svg>
     </section>
 
     <section class="list">

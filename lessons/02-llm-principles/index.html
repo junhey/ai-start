@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
   <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
 </head>
 <body class="lesson-02">
 
@@ -58,6 +59,50 @@ print(tokens)
 print([enc.decode([t]) for t in tokens])
 # ['我', '爱', ' ', 'AI']
 </code></pre>
+    </section>
+
+    <!-- 4.5 交互：Token 可视化 -->
+    <section>
+      <aside class="notes">互动时间！让听众自己输入一句话，看拆分结果。强调中英文 token 数量差异。</aside>
+      <h2 style="font-size:1.8em;color:var(--poster-accent)">🎮 试试：你的话有几个 Token？</h2>
+      <div class="interactive-box">
+        <input id="token-input" type="text" value="我爱 AI，它改变了世界" 
+          style="width:100%;padding:0.5em;font-size:1em;background:#111;border:2px solid #444;border-radius:8px;color:#fff;font-family:var(--poster-font-mono)" 
+          oninput="tokenize(this.value)">
+        <div id="token-output" class="demo-output" style="margin-top:0.6em;display:flex;flex-wrap:wrap;gap:0.3em;min-height:3em"></div>
+        <p style="font-size:0.7em;color:var(--poster-mute);margin-top:0.4em">
+          Token 数：<span id="token-count" style="color:var(--poster-accent);font-weight:900">0</span>
+          &nbsp;·&nbsp;简化模拟（实际 BPE 更复杂）
+        </p>
+      </div>
+      <script>
+        function tokenize(text) {
+          // 简化 tokenizer：中文逐字，英文按空格/标点，数字连续
+          const tokens = [];
+          let i = 0;
+          while (i < text.length) {
+            const c = text[i];
+            if (/[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]/.test(c)) {
+              tokens.push(c); i++;
+            } else if (/[a-zA-Z]/.test(c)) {
+              let w = ''; while (i < text.length && /[a-zA-Z]/.test(text[i])) w += text[i++];
+              tokens.push(w);
+            } else if (/[0-9]/.test(c)) {
+              let w = ''; while (i < text.length && /[0-9]/.test(text[i])) w += text[i++];
+              tokens.push(w);
+            } else {
+              tokens.push(c); i++;
+            }
+          }
+          const colors = ['#FF3366','#00D9FF','#FFD93D','#06FFA5','#FF6B35','#C084FC','#EC4899','#10B981'];
+          const out = document.getElementById('token-output');
+          out.innerHTML = tokens.map((t,i) => 
+            `<span style="padding:0.2em 0.5em;border-radius:6px;background:${colors[i%8]}22;border:2px solid ${colors[i%8]};font-weight:700">${t.replace(/</g,'&lt;')}</span>`
+          ).join('');
+          document.getElementById('token-count').textContent = tokens.length;
+        }
+        tokenize("我爱 AI，它改变了世界");
+      </script>
     </section>
 
     <!-- 5. 词嵌入 -->
@@ -163,17 +208,53 @@ prompt = "今天天气"
       </ul>
     </section>
 
-    <!-- 13. 温度 / Top-p -->
-    <section class="list">
+    <!-- 13. 温度 / Top-p —— 交互式 -->
+    <section>
       <aside class="notes">采样参数实战：抽取/分类/代码用 0；创作用 0.7-1。Top-p 比 Top-k 更平滑。frequency_penalty 解决重复啰嗦。</aside>
-      <h2>采样参数</h2>
-      <ul>
-        <li class="fragment"><strong>temperature</strong> · 0 = 确定 / 1 = 创造</li>
-        <li class="fragment"><strong>top-p</strong> · 累积概率裁切（核采样）</li>
-        <li class="fragment"><strong>top-k</strong> · 只看前 k 个候选</li>
-        <li class="fragment"><strong>frequency_penalty</strong> · 抑制重复</li>
-        <li class="fragment mute">代码 / 抽取场景：temperature ≈ 0；创作场景：0.7-1</li>
-      </ul>
+      <h2 style="font-size:1.8em;color:var(--poster-accent)">🎮 温度实验室</h2>
+      <div class="interactive-box">
+        <p style="font-size:0.9em;margin-bottom:0.5em"><strong>prompt:</strong> "今天天气真"</p>
+        <label style="font-size:0.8em;color:var(--poster-mute)">
+          temperature: <span id="temp-val" style="color:var(--poster-accent);font-weight:900">0.7</span>
+        </label>
+        <input type="range" id="temp-slider" min="0" max="20" value="7" oninput="updateTemp(this.value)">
+        <div style="display:flex;justify-content:space-between;font-size:0.6em;color:#666">
+          <span>0 · 确定性</span><span>1.0 · 创造性</span><span>2.0 · 混沌</span>
+        </div>
+        <div id="temp-output" class="demo-output" style="margin-top:0.6em;font-size:0.85em;min-height:3em"></div>
+        <p style="font-size:0.6em;color:var(--poster-mute);margin-top:0.3em">
+          → 低温：每次输出几乎一样 &nbsp;|&nbsp; 高温：输出随机多样
+        </p>
+      </div>
+      <script>
+        const tempOutputs = {
+          0: ["好。","好。","好。","好。","好。"],
+          1: ["好。","好啊。","好。","好。","不错。"],
+          2: ["好。","好啊。","好，适合出去走走。","不错。","好。"],
+          3: ["好啊！","不错，万里无云。","好，适合户外。","很好！","好得很。"],
+          5: ["不错，适合散步。","好得不像话！","舒服极了。","挺好的，阳光明媚。","真的很棒。"],
+          7: ["好得离谱，像造假的天气预报。","棒极了，想翘班出去浪。","不错！阳光 + 微风 = 完美。","舒服~","好到让人怀疑人生。"],
+          10: ["好到我怀疑气象局在画饼。","让人想辞职去海边。","如果天气也有KPI，今天绩效 S+。","太好了以至于我开始焦虑。","好！（鼓掌）"],
+          15: ["鲜花开始自发演唱。","太阳穿着西装来上班。","云朵在天上写情书。","这天气有 99.7% 的概率是模拟的。","我和天气一起悟了。"],
+          20: ["🌈🦄✨紫色大象在跳华尔兹🎭","天空是一碗味增汤","temperature=2的天气：量子态","鱼跃出水面说'你好'","整个世界在 softmax 里融化了"]
+        };
+        function updateTemp(v) {
+          const t = (v / 10).toFixed(1);
+          document.getElementById('temp-val').textContent = t;
+          // find nearest key
+          const keys = Object.keys(tempOutputs).map(Number).sort((a,b)=>a-b);
+          let best = keys[0];
+          for (const k of keys) { if (k <= parseInt(v)) best = k; }
+          const samples = tempOutputs[best];
+          const out = document.getElementById('temp-output');
+          out.innerHTML = samples.map((s,i) => 
+            `<div style="padding:0.2em 0;border-bottom:1px solid #222;${i===0?'color:var(--poster-accent)':'color:#ccc'}">
+              <span style="color:#555;font-size:0.8em">sample ${i+1}:</span> ${s}
+            </div>`
+          ).join('');
+        }
+        updateTemp(7);
+      </script>
     </section>
 
     <!-- 14. 总结 + 预告 -->

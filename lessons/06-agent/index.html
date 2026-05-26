@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
   <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+  <link rel="stylesheet" href="../../assets/css/animations.css">
 </head>
 <body class="lesson-06">
 
@@ -38,17 +39,63 @@
       </ul>
     </section>
 
-    <section class="terminal">
+    <section>
       <aside class="notes">ReAct 循环：思考 → 行动 → 观察 → 再思考。这是 Agent 的最基本骨架。所有高级框架都围绕这个循环展开。</aside>
-      <h2>react loop</h2>
-<pre><code class="language-text" data-trim>
-Question: 杭州明天天气如何？
-Thought: 我需要查询天气，调用 weather 工具。
-Action: weather(city="杭州", date="tomorrow")
-Observation: 多云，22-30℃，降水概率 20%。
-Thought: 我已经拿到信息，可以回答了。
-Final Answer: 杭州明天多云，22-30℃，降水 20%。
-</code></pre>
+      <h2 style="font-size:1.8em;color:var(--poster-accent)">🎮 ReAct 循环播放器</h2>
+      <div class="interactive-box" style="position:relative">
+        <div class="step-indicator" id="react-steps">
+          <div class="step active" id="rs-1">Q</div>
+          <div class="step-line" id="rl-1"></div>
+          <div class="step" id="rs-2">T</div>
+          <div class="step-line" id="rl-2"></div>
+          <div class="step" id="rs-3">A</div>
+          <div class="step-line" id="rl-3"></div>
+          <div class="step" id="rs-4">O</div>
+          <div class="step-line" id="rl-4"></div>
+          <div class="step" id="rs-5">T</div>
+          <div class="step-line" id="rl-5"></div>
+          <div class="step" id="rs-6">✓</div>
+        </div>
+        <div id="react-display" class="demo-output" style="min-height:4em;font-size:0.8em;line-height:1.6;white-space:pre-wrap"></div>
+        <div style="margin-top:0.6em;display:flex;gap:0.6em">
+          <button onclick="reactStep(-1)" style="padding:0.3em 1em;background:#333;color:#fff;border:2px solid #555;border-radius:6px;cursor:pointer;font-weight:700">← 上一步</button>
+          <button onclick="reactStep(1)" style="padding:0.3em 1em;background:var(--poster-accent);color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:900">下一步 →</button>
+          <button onclick="reactAutoPlay()" style="padding:0.3em 1em;background:#222;color:var(--poster-accent);border:2px solid var(--poster-accent);border-radius:6px;cursor:pointer;font-weight:700">▶ 自动播放</button>
+        </div>
+      </div>
+      <script>
+        const reactData = [
+          {label:"Question", text:"❓ 杭州明天天气如何？", color:"#fff"},
+          {label:"Thought", text:"🧠 我需要查询天气，应该调用 weather 工具，参数是杭州、明天。", color:"#C084FC"},
+          {label:"Action", text:"⚡ weather(city=\"杭州\", date=\"2026-05-27\")", color:"#FACC15"},
+          {label:"Observation", text:"📡 返回: {\"condition\":\"多云\", \"temp\":\"22-30℃\", \"rain\":\"20%\"}", color:"#06FFA5"},
+          {label:"Thought", text:"🧠 我已经拿到天气信息了，可以直接回答用户。", color:"#C084FC"},
+          {label:"Final Answer", text:"✅ 杭州明天多云，22-30℃，降水概率 20%。建议带把伞以防万一。", color:"#10B981"}
+        ];
+        let reactIdx = 0;
+        function renderReact() {
+          for(let i=1;i<=6;i++){
+            document.getElementById('rs-'+i).className = 'step' + (i<=reactIdx+1?' active':'');
+            if(i<6) document.getElementById('rl-'+i).className = 'step-line' + (i<=reactIdx?' active':'');
+          }
+          const d = reactData[reactIdx];
+          document.getElementById('react-display').innerHTML = 
+            `<span style="color:${d.color};font-weight:900">[${d.label}]</span>\n${d.text}`;
+        }
+        function reactStep(dir) {
+          reactIdx = Math.max(0, Math.min(reactData.length-1, reactIdx+dir));
+          renderReact();
+        }
+        function reactAutoPlay() {
+          reactIdx = 0; renderReact();
+          let i = 0;
+          const iv = setInterval(()=>{
+            i++; if(i>=reactData.length){clearInterval(iv);return;}
+            reactIdx=i; renderReact();
+          }, 1200);
+        }
+        renderReact();
+      </script>
     </section>
 
     <section class="list">
