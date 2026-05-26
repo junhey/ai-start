@@ -15,17 +15,20 @@
   <div class="slides">
 
     <section class="cover">
+      <aside class="notes">本节最大的价值不是教你微调，而是劝你别乱微调。多数情况下，Prompt + RAG 已经够用。</aside>
       <div class="episode">LESSON · 07</div>
       <h1>什么时候<br>该<br><span class="accent">微调？</span></h1>
       <p class="slogan">微调与训练：成本、效果、决策。</p>
     </section>
 
     <section class="hero">
+      <aside class="notes">强调：大多数情况不该微调。Prompt → RAG → 微调 → 预训练，按这个顺序考虑。</aside>
       <h1>大多数<br>情况<br><span class="accent">不该</span></h1>
       <p class="fragment fade-up">Prompt → RAG → 微调 → 预训练，按这个顺序考虑。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">决策树：缺知识 → RAG；缺风格 → 微调；缺能力 → 大概率得换模型，不是微调。</aside>
       <h2>决策树</h2>
       <ul>
         <li class="fragment">问题是 <strong>提示不到位</strong>？→ 改 Prompt</li>
@@ -37,6 +40,7 @@
     </section>
 
     <section class="vs">
+      <aside class="notes">全参 vs LoRA 的本质：要不要更新所有权重。70B 全参微调需要 1TB+ 显存，普通团队做不起。</aside>
       <h2>全参 vs LoRA</h2>
       <div class="vs-grid">
         <div class="vs-side left">
@@ -62,11 +66,13 @@
     </section>
 
     <section class="hero">
+      <aside class="notes">LoRA 核心想法：大模型权重的'调整量'是低秩的，所以训一个小矩阵就行。</aside>
       <h1>LoRA<br>核心<br><span class="accent">想法</span></h1>
       <p class="fragment fade-up">大模型权重的"调整量"是低秩的。</p>
     </section>
 
     <section class="terminal">
+      <aside class="notes">讲一遍数学：原始 d×d 拆成 d×r 和 r×d 两个小矩阵，r=8 就能减 250 倍参数。</aside>
       <h2>lora math</h2>
 <pre><code class="language-text" data-trim>
 原始权重: W ∈ R^(d × d)            (d=4096, 参数 ≈ 16M)
@@ -82,6 +88,7 @@ LoRA 改造:
     </section>
 
     <section class="list">
+      <aside class="notes">QLoRA 把存储压到 4-bit，加上 LoRA，单张 24GB 显卡能微调 33B 模型。这是 2023 年最大的工程突破之一。</aside>
       <h2>QLoRA · 4-bit 量化 + LoRA</h2>
       <ul>
         <li class="fragment">原模型权重压到 <strong>4-bit</strong> 存储</li>
@@ -92,6 +99,7 @@ LoRA 改造:
     </section>
 
     <section class="list">
+      <aside class="notes">PEFT 全家桶：LoRA 是工业主流，其他用得少但也要知道名字。</aside>
       <h2>PEFT 全家桶</h2>
       <ul>
         <li class="fragment"><strong>LoRA / QLoRA</strong>：业界主流</li>
@@ -103,6 +111,7 @@ LoRA 改造:
     </section>
 
     <section class="list">
+      <aside class="notes">指令微调数据：1k 条精标 &gt; 10w 条粗标。LIMA 论文证明了'Less is More'。</aside>
       <h2>指令微调数据格式</h2>
       <ul>
         <li class="fragment"><strong>三段式</strong>：instruction / input / output</li>
@@ -114,6 +123,7 @@ LoRA 改造:
     </section>
 
     <section class="list">
+      <aside class="notes">DPO 取代 RLHF 是大趋势。数据格式 (prompt, chosen, rejected) 三元组，训练简单稳定。</aside>
       <h2>DPO · 直接偏好优化</h2>
       <ul>
         <li class="fragment">RLHF 复杂：要训奖励模型 + PPO</li>
@@ -125,6 +135,7 @@ LoRA 改造:
     </section>
 
     <section class="list">
+      <aside class="notes">算力估算给个体感：7B QLoRA 一张 4090 几小时；70B QLoRA 两张 A100 一天起。云成本几十到几千美元。</aside>
       <h2>算力估算（粗略）</h2>
       <ul>
         <li class="fragment"><strong>7B 全参</strong> · 8×A100 80GB · 几小时-几天</li>
@@ -135,6 +146,7 @@ LoRA 改造:
     </section>
 
     <section class="list">
+      <aside class="notes">工具链：中文社区 LLaMA-Factory 主流；Axolotl 工业化；Unsloth 速度快。下一课多模态。</aside>
       <h2>工具链</h2>
       <ul>
         <li class="fragment"><strong>LLaMA-Factory</strong> · 中文社区主流，零代码</li>

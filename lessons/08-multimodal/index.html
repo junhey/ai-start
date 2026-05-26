@@ -15,17 +15,20 @@
   <div class="slides">
 
     <section class="cover">
+      <aside class="notes">本节内容快速过，重点让大家知道'生态在哪'，方便回去自己探索。</aside>
       <div class="episode">LESSON · 08</div>
       <h1>AI 长出<br>眼睛、耳朵<br>和<span class="accent">声音</span></h1>
       <p class="slogan">多模态：从 CLIP 到 Sora，从语音到 3D。</p>
     </section>
 
     <section class="hero">
+      <aside class="notes">核心思想：把图像、文本、音频都映射到同一个语义空间。CLIP 是奠基工作。</aside>
       <h1>同一<br>语义<br><span class="accent">空间</span></h1>
       <p class="fragment fade-up">把图片、文字、音频映射到一个向量空间。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">CLIP 用 4 亿组(图,文)对训练，对比学习把相关的拉近、不相关的拉远。SD/DALL-E 都用 CLIP 做文本编码器。</aside>
       <h2>CLIP · 奠基工作</h2>
       <ul>
         <li class="fragment">2021, OpenAI</li>
@@ -37,11 +40,13 @@
     </section>
 
     <section class="hero">
+      <aside class="notes">扩散模型用'反向去噪'生成图像。从纯噪声出发，迭代 25-50 步还原成图。</aside>
       <h1>扩散<br>模型<br><span class="accent">DM</span></h1>
       <p class="fragment fade-up">从纯噪声反推出图像。</p>
     </section>
 
     <section class="terminal">
+      <aside class="notes">扩散直觉：先训练'每一步该去多少噪声'，推理时反向走一遍。Latent Diffusion 在隐空间做，省算力 10 倍。</aside>
       <h2>diffusion intuition</h2>
 <pre><code class="language-text" data-trim>
 正向过程: 图像 → 加噪声 → 加噪声 → ... → 纯噪声
@@ -53,6 +58,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">Stable Diffusion 是开源王者。SD 1.5/SDXL/SD 3 一路演进，今天 FLUX 是精神继承者。生态：LoRA + ControlNet 极致自由。</aside>
       <h2>Stable Diffusion · 开源王者</h2>
       <ul>
         <li class="fragment"><strong>Latent Diffusion</strong>：在隐空间扩散，省算力</li>
@@ -64,6 +70,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">ControlNet 是设计师的福音。给一张姿态/边缘/深度图，AI 会按你给的轮廓画。</aside>
       <h2>ControlNet · 精确控制</h2>
       <ul>
         <li class="fragment">问题：纯文本难控制构图</li>
@@ -74,6 +81,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">闭源四强：Midjourney 美学最强，DALL-E 文本理解最好，Imagen 3 综合优秀，Ideogram 字符渲染好。</aside>
       <h2>闭源标杆</h2>
       <ul>
         <li class="fragment"><strong>Midjourney</strong> · 美学统治者</li>
@@ -84,11 +92,13 @@
     </section>
 
     <section class="hero">
+      <aside class="notes">→ 视频是 2024 的爆发点。</aside>
       <h1>视频<br><span class="accent">爆发</span></h1>
       <p class="fragment fade-up">2024 是文生视频的"GPT 时刻"。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">代表作：Sora 一分钟级、Veo 3 同步音效、Kling 国产代表。底层是 DiT — Diffusion Transformer。</aside>
       <h2>视频生成代表</h2>
       <ul>
         <li class="fragment"><strong>Sora</strong> · OpenAI · 1 分钟级别</li>
@@ -100,6 +110,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">多模态 LLM：GPT-4o / Claude 3.5 / Gemini 2 / Qwen-VL / InternVL 都是日常工具。截图+提问已成主流工作流。</aside>
       <h2>多模态 LLM</h2>
       <ul>
         <li class="fragment"><strong>GPT-4V / 4o</strong> · 视觉旗舰</li>
@@ -111,6 +122,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">视觉理解四大场景：OCR / 图表 / VQA / UI 自动化（Computer Use）。</aside>
       <h2>视觉理解能力</h2>
       <ul>
         <li class="fragment"><strong>OCR</strong> · 票据、表格、手写</li>
@@ -121,6 +133,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">语音生态：Whisper 几乎统一 ASR，TTS 看 ElevenLabs/OpenAI，实时对话靠 Realtime API。</aside>
       <h2>语音生态</h2>
       <ul>
         <li class="fragment"><strong>Whisper</strong> · 多语言 ASR 标杆</li>
@@ -131,6 +144,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">3D 是新爆发方向：Gaussian Splatting / Tripo / Hunyuan3D。世界模型 Genie/SIMA 也值得关注。下一课 AI Coding。</aside>
       <h2>3D 与新兴方向</h2>
       <ul>
         <li class="fragment"><strong>Gaussian Splatting</strong> · 3D 重建新范式</li>

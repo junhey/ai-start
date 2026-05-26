@@ -16,6 +16,7 @@
 
     <!-- 1. 封面 -->
     <section class="cover">
+      <aside class="notes">这是全课程最'硬'的一节。如果只能让听众记住一件事，就是 Self-Attention 公式。</aside>
       <div class="episode">LESSON · 03</div>
       <h1>Attention<br>is<br><span class="accent">All</span><br>You Need.</h1>
       <p class="slogan">2017 年那篇改变世界的论文。</p>
@@ -23,6 +24,7 @@
 
     <!-- 2. 论文背景 -->
     <section class="list">
+      <aside class="notes">8 人小队 + 12 万次引用 + 2017 论文。Vaswani et al. 这帮人写论文时根本想不到自己重塑了世界。</aside>
       <h2>2017 · Google Brain</h2>
       <ul>
         <li class="fragment"><strong>8 人小队</strong>，被引用超 12 万次</li>
@@ -35,6 +37,7 @@
 
     <!-- 3. RNN 的痛 -->
     <section class="vs">
+      <aside class="notes">RNN 的两大死穴：顺序计算（不能并行）+ 长依赖丢失（梯度爆炸/消失）。Transformer 一次解决。</aside>
       <h2>RNN vs Transformer</h2>
       <div class="vs-grid">
         <div class="vs-side left">
@@ -61,12 +64,14 @@
 
     <!-- 4. 注意力直觉 -->
     <section class="hero">
+      <aside class="notes">讲注意力的直觉：读到代词时，要决定它指代谁 — 这就是'看哪里'。Attention 是对'哪个上下文 token 最相关'的概率分布。</aside>
       <h1>"看<br><span class="accent">哪里</span>"<br>的能力</h1>
       <p class="fragment fade-up">读"<strong>它</strong>很可爱"时，"它"该看哪个名词？</p>
     </section>
 
     <!-- 5. Self-Attention 公式 -->
     <section class="terminal">
+      <aside class="notes">把 Q/K/V 翻译成大白话：Q 是'我想问什么'、K 是'我能提供什么'、V 是'我实际给什么'。三件事是同一份输入分别投影出来的。</aside>
       <h2>self-attention</h2>
 <pre><code class="language-text" data-trim>
 Attention(Q, K, V) = softmax( Q · K^T / √d_k ) · V
@@ -79,6 +84,7 @@ V = X · W_V   ← 别人"实际给什么"
 
     <!-- 6. 公式拆解 -->
     <section class="list">
+      <aside class="notes">公式三步走：① QK^T 算相关性 → ② softmax 归一化 → ③ 加权求和 V。可以现场画一遍 token 矩阵。</aside>
       <h2>三步拆解</h2>
       <ul>
         <li class="fragment"><strong>① 算相关性</strong> · Q × K^T → 每个 token 对其他 token 的"关注度"</li>
@@ -90,11 +96,13 @@ V = X · W_V   ← 别人"实际给什么"
 
     <!-- 7. 多头注意力 -->
     <section class="hero">
+      <aside class="notes">多头 = 多个观察视角。8/16/128 头都见过，越大越细。强调'有的头看语法，有的看实体' — 这是事后可解释性的发现。</aside>
       <h1>多头<br><span class="accent">×8 / ×16 / ×128</span></h1>
       <p class="fragment fade-up">多个观察视角并行，再拼起来。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">位置编码是 Transformer 的隐形支柱。没有位置信息，'我打你' 和 '你打我' 在 attention 里一模一样。RoPE 是现代主流。</aside>
       <h2>为什么要多头</h2>
       <ul>
         <li class="fragment">单头只能学一种"关系模式"</li>
@@ -106,6 +114,7 @@ V = X · W_V   ← 别人"实际给什么"
 
     <!-- 8. 位置编码 -->
     <section class="list">
+      <aside class="notes">Encoder vs Decoder：原始论文双塔 → 现实中 Decoder-only 占领高地。问听众：为什么？让他们先猜。</aside>
       <h2>位置编码</h2>
       <ul>
         <li class="fragment">问题：Attention 是<strong>无序</strong>的</li>
@@ -118,6 +127,7 @@ V = X · W_V   ← 别人"实际给什么"
 
     <!-- 9. Encoder vs Decoder -->
     <section class="vs">
+      <aside class="notes">Decoder-only 胜出原因：① 任务通用；② 训练简单；③ 涌现能力。简单的胜过复杂的。</aside>
       <h2>双塔结构（原始）</h2>
       <div class="vs-grid">
         <div class="vs-side left">
@@ -142,11 +152,13 @@ V = X · W_V   ← 别人"实际给什么"
 
     <!-- 10. Decoder-only 胜出 -->
     <section class="quote">
+      <aside class="notes">70B 参数都在 FFN（前馈层），Attention 只占 25%。所以微调时改 FFN 影响最大。LoRA 默认改 Attention 是个权衡。</aside>
       <p class="saying">最后<br><span class="accent">只用 Decoder</span><br>就赢了。</p>
       <p class="author">GPT-1, 2018 → ChatGPT, 2022</p>
     </section>
 
     <section class="list">
+      <aside class="notes">总结：Self-Attention 公式 + 多头 + 位置编码 + Decoder-only 四件套。下一课开始进入实战 — Prompt 工程。</aside>
       <h2>Decoder-only 为何称王</h2>
       <ul>
         <li class="fragment">"预测下一个词"任务足够通用</li>

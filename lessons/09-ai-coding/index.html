@@ -15,17 +15,20 @@
   <div class="slides">
 
     <section class="cover">
+      <aside class="notes">本节最实用，每个开发者都受益。我会重点讲方法论，不只讲工具。</aside>
       <div class="episode">LESSON · 09</div>
       <h1>程序员<br>正在<br><span class="accent">变形</span></h1>
       <p class="slogan">AI Coding：从补全到 Agent，你怎么用？</p>
     </section>
 
     <section class="hero">
+      <aside class="notes">三代工具：补全（Copilot 2021）→ IDE 集成（Cursor 2023）→ Agent 自主开发（Claude Code/CodeBuddy/Devin 2024）。形态在快速演进。</aside>
       <h1>三<br><span class="accent">代</span><br>工具</h1>
       <p class="fragment fade-up">补全 → IDE 集成 → Agent 自主开发。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">三代演进的本质：从'建议'到'代劳'。每一代降低使用者的认知负担。</aside>
       <h2>三代演进</h2>
       <ul>
         <li class="fragment"><strong>Gen 1 · 补全</strong>：GitHub Copilot（2021）</li>
@@ -36,11 +39,13 @@
     </section>
 
     <section class="hero">
+      <aside class="notes">上下文工程是 AI Coding 的核心能力。AI 写得好不好，一半看你给了多少有用上下文。</aside>
       <h1>上下文<br><span class="accent">工程</span></h1>
       <p class="fragment fade-up">让 AI 真正读懂你的代码库。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">上下文四层：当前文件 / 跨文件 / 项目级（README/约定文件）/ 外部依赖。AI Agent 时代，工具自己会探索，但你给得越准越快越准。</aside>
       <h2>上下文从哪来</h2>
       <ul>
         <li class="fragment"><strong>当前文件</strong>：光标周围 + 全文</li>
@@ -52,6 +57,7 @@
     </section>
 
     <section class="vs">
+      <aside class="notes">工具对比：IDE 类适合'所见即所得'；CLI Agent 类适合命令行原生 + 自动化场景。两类都装，按场景选。</aside>
       <h2>主流工具对比</h2>
       <div class="vs-grid">
         <div class="vs-side left">
@@ -77,6 +83,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">Agent 编程范式：计划 → 探索 → 编辑 → 验证。像一个会用 IDE 的实习生。</aside>
       <h2>Agent 编程范式</h2>
       <ul>
         <li class="fragment"><strong>计划</strong>：先想清楚再动手</li>
@@ -88,6 +95,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">好 Coding Prompt 五要素：明确目标 + 给约束 + 给参考 + 分步骤 + 验收标准。最后一条最重要：测试通过 / 输出符合 = 客观验收。</aside>
       <h2>怎么写好 Coding Prompt</h2>
       <ul>
         <li class="fragment"><strong>明确目标</strong>：要做什么、为什么</li>
@@ -99,6 +107,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">AI 当 Reviewer：让它看 diff 找 bug、找异味，要求结构化输出。和人类 Review 互补不替代。</aside>
       <h2>AI 当 Reviewer</h2>
       <ul>
         <li class="fragment">让 AI 看 diff，找 bug、找异味</li>
@@ -109,6 +118,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">TDD + AI 是黄金组合：先让 AI 写测试（人类审），再让 AI 写实现。测试是 AI 的指南针。</aside>
       <h2>测试驱动 + AI</h2>
       <ul>
         <li class="fragment">先让 AI 写测试用例（基于需求）</li>
@@ -120,6 +130,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">重构和迁移是 AI 投入产出比最高的场景：大批量改名、Python→Go、API 升级、补注释。</aside>
       <h2>重构与迁移</h2>
       <ul>
         <li class="fragment"><strong>大批量改名 / 重构</strong>：AI 一次到位</li>
@@ -131,6 +142,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">失败模式四件套：幻觉 API / 过度修改 / 循环死锁 / 沉默吞错。强调'必须人类把关'。</aside>
       <h2>失败模式</h2>
       <ul>
         <li class="fragment"><strong>幻觉 API</strong>：调用不存在的方法 / 包</li>
@@ -142,6 +154,7 @@
     </section>
 
     <section class="list">
+      <aside class="notes">团队规范：用约定文件（CLAUDE.md/.cursorrules/AGENTS.md）落地规则；高敏感目录禁用 AI；每个 session 一个 commit；AI 写的代码人类必读；教训写进规则文件持续沉淀。下一课伦理与未来。</aside>
       <h2>团队规范（AI 时代）</h2>
       <ul>
         <li class="fragment"><strong>项目约定文件</strong>：CLAUDE.md / .cursorrules / AGENTS.md</li>

@@ -16,6 +16,7 @@
 
     <!-- 1. 封面 -->
     <section class="cover">
+      <aside class="notes">本节是补充课，给真正想把 AI 落地到生产的同学。比前 10 课更工程、更实战。</aside>
       <div class="episode">LESSON · 11</div>
       <h1>给模型<br>套上<br><span class="accent">缰绳</span></h1>
       <p class="slogan">Harness Engineering · 让 AI 真正能上生产。</p>
@@ -23,12 +24,14 @@
 
     <!-- 2. 灵魂拷问 -->
     <section class="hero">
+      <aside class="notes">灵魂拷问：'Demo 跑通是 5%，剩下 95% 是工程'。让大家想自己手里那个 demo 上线了吗？为什么没上？</aside>
       <h1>能用<br>≠<br><span class="accent">够用</span></h1>
       <p class="fragment fade-up">Demo 跑通是 5%，剩下 95% 是工程。</p>
     </section>
 
     <!-- 3. 模型能力四件套 -->
     <section class="list">
+      <aside class="notes">模型四件套：理解 / 生成 / 推理 / 调用工具。这是模型的'原始马力'。</aside>
       <h2>模型能力 · 四件套</h2>
       <ul>
         <li class="fragment"><strong>理解</strong> · 看懂输入：文本 / 图像 / 代码 / 数据</li>
@@ -41,18 +44,21 @@
 
     <!-- 4. 但是… -->
     <section class="quote">
+      <aside class="notes">→ 但只有马力是不够的。</aside>
       <p class="saying">原始马力大<br>≠<br><span class="accent">能拉车</span></p>
       <p class="author">没有缰绳，马力越大越危险</p>
     </section>
 
     <!-- 5. Harness 是什么 -->
     <section class="hero">
+      <aside class="notes">金句：原始马力大 ≠ 能拉车。一辆车没有缰绳、没有刹车，越快越危险。这就是 AI 系统不带 Harness 的样子。</aside>
       <h1>Harness<br>=<br><span class="accent">缰绳</span></h1>
       <p class="fragment fade-up">套在模型外面的工程系统：约束 + 验证 + 追溯 + 回退 + 沉淀 + 审批。</p>
     </section>
 
     <!-- 6. 全景图 -->
     <section class="terminal">
+      <aside class="notes">Harness = 套在模型外面的工程系统。六要素：约束 / 验证 / 追溯 / 回退 / 沉淀 / 审批。</aside>
       <h2>harness pipeline</h2>
 <pre><code class="language-text" data-trim>
 [ 输入 ] → 约束 ──► 模型(理解/生成/推理/工具) ──► 验证 ──► [ 输出 ]
@@ -66,6 +72,7 @@
 
     <!-- 7. 约束 -->
     <section class="list">
+      <aside class="notes">全景图必讲：输入先过约束（护栏） → 模型干活 → 验证再放行；旁路有审批门、追溯日志、回退路径、沉淀环路。</aside>
       <h2>① 约束 · Constraint</h2>
       <ul>
         <li class="fragment"><strong>边界</strong>：能做什么 / 不能做什么（白/黑名单）</li>
@@ -79,6 +86,7 @@
 
     <!-- 8. 验证 -->
     <section class="list">
+      <aside class="notes">约束 ① 五件事：边界（白/黑名单）、预算（步数/token/钱）、资源（哪些工具能调）、输入护栏（长度/敏感词/注入）、输出护栏（Schema/审核/PII 脱敏）。强调'越自由的模型越需要边界'。</aside>
       <h2>② 验证 · Verification</h2>
       <ul>
         <li class="fragment"><strong>语法验证</strong>：JSON / SQL / 代码可解析</li>
@@ -92,6 +100,7 @@
 
     <!-- 9. 追溯 -->
     <section class="list">
+      <aside class="notes">验证 ②：语法、规则、事实、测试、双 LLM 互检。'信任但验证'。验证失败 = 重试或回退，不是当成对的吞下去。</aside>
       <h2>③ 追溯 · Traceability</h2>
       <ul>
         <li class="fragment"><strong>请求级</strong>：trace_id 串起每一次调用</li>
@@ -105,6 +114,7 @@
 
     <!-- 10. 回退 -->
     <section class="list">
+      <aside class="notes">追溯 ③：trace_id 串起每一次调用，每一步思考、引用、版本号都要存。Langfuse / LangSmith 是主流工具。能复盘的系统才能改进。</aside>
       <h2>④ 回退 · Fallback</h2>
       <ul>
         <li class="fragment"><strong>重试策略</strong>：指数退避、max retries、温度抖动</li>
@@ -118,6 +128,7 @@
 
     <!-- 11. 沉淀 -->
     <section class="list">
+      <aside class="notes">回退 ④：重试 + 退避 + 降级 + 断路器 + 事务回滚 + 人工兜底。'别让一次失败毁掉整条流程'。</aside>
       <h2>⑤ 沉淀 · Distillation</h2>
       <ul>
         <li class="fragment"><strong>从日志学</strong>：失败模式归类、典型错误打标</li>
@@ -131,6 +142,7 @@
 
     <!-- 12. 审批 -->
     <section class="list">
+      <aside class="notes">沉淀 ⑤：失败模式归类、Prompt 迭代、规则化、回归集、SFT 反哺。系统越用越聪明，而不是越乱。</aside>
       <h2>⑥ 审批 · Approval</h2>
       <ul>
         <li class="fragment"><strong>风险分级</strong>：只读 / 可逆写 / 不可逆写 / 高风险</li>
@@ -144,6 +156,7 @@
 
     <!-- 13. 全景对比 -->
     <section class="vs">
+      <aside class="notes">审批 ⑥：风险分级 + HITL（Human in the Loop）+ 审批链 + 预览 diff + 审计留痕。'越自动化越需要刹车手'。</aside>
       <h2>没 Harness vs 有 Harness</h2>
       <div class="vs-grid">
         <div class="vs-side left">
@@ -170,6 +183,7 @@
 
     <!-- 14. 实战清单 -->
     <section class="terminal">
+      <aside class="notes">对比页：裸调模型 demo 5 分钟搞定，5 天翻车；带 Harness 初期慢一点，但越跑越稳。这是开发者要做的工程价值判断。</aside>
       <h2>checklist</h2>
 <pre><code class="language-text" data-trim>
 [ ] 输入 schema 校验
@@ -187,6 +201,7 @@
 
     <!-- 15. 主流落地 -->
     <section class="list">
+      <aside class="notes">实战清单：上线前 10 项必检。这页可以截图发给团队当 PR 模板。</aside>
       <h2>主流落地工具</h2>
       <ul>
         <li class="fragment"><strong>编排</strong> · LangGraph / Temporal / Restate</li>
@@ -199,12 +214,14 @@
 
     <!-- 16. 金句 -->
     <section class="quote">
+      <aside class="notes">落地工具栈：编排（LangGraph/Temporal）、验证（Guardrails/Pydantic）、观测（Langfuse/LangSmith）、评测（Promptfoo/Ragas）、审批（IM 机器人 + 工作流）。</aside>
       <p class="saying">模型管<span class="accent">智能</span>，<br>Harness 管<span class="accent">可靠</span>。<br>缺一不可。</p>
       <p class="author">AI 工程的两条腿</p>
     </section>
 
     <!-- 17. 总结 -->
     <section class="summary">
+      <aside class="notes">金句收尾：'模型管智能，Harness 管可靠。缺一不可'。这是 AI 工程的两条腿。</aside>
       <h2>本课收获</h2>
       <div class="keywords">
         <span class="kw">模型四件套</span>

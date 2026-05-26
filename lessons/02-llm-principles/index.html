@@ -16,6 +16,7 @@
 
     <!-- 1. 封面 -->
     <section class="cover">
+      <aside class="notes">本节最'反直觉'：LLM 看起来什么都会，但它真就只做一件事 —— 预测下一个 token。35 分钟，多用类比。</aside>
       <div class="episode">LESSON · 02</div>
       <h1>LLM<br>只做<br><span class="accent">一件事</span></h1>
       <p class="slogan">预测下一个词。仅此而已。</p>
@@ -23,12 +24,14 @@
 
     <!-- 2. 灵魂拷问 -->
     <section class="hero">
+      <aside class="notes">灵魂拷问：能不能用'猜下一个'解释 ChatGPT 的几乎所有行为？答案是：能。这就是 LLM 的核心。</aside>
       <h1>"猜<br>下<br><span class="accent">一个</span>"</h1>
       <p class="fragment fade-up">为什么这件小事，能产生看起来像智能的东西？</p>
     </section>
 
     <!-- 3. Token 是什么 -->
     <section class="list">
+      <aside class="notes">Token 不是字、不是词，是 BPE/字节对编码切出来的子词单元。强调：英文 1 词常 1-3 token，中文 1 字常 1-2 token。所以中英文计费差异巨大。</aside>
       <h2>Token 是什么</h2>
       <ul>
         <li class="fragment">不是字、不是词，是 <strong>BPE 子词单元</strong></li>
@@ -41,6 +44,7 @@
 
     <!-- 4. Tokenizer 演示 -->
     <section class="terminal">
+      <aside class="notes">现场跑 tokenizer demo（如果联网）。或者用 OpenAI Tokenizer 网站演示。让大家亲眼看到中文一个字 = 多个 token 的现实。</aside>
       <h2>tokenizer demo</h2>
 <pre><code class="language-python" data-trim data-noescape>
 from tiktoken import encoding_for_model
@@ -58,12 +62,14 @@ print([enc.decode([t]) for t in tokens])
 
     <!-- 5. 词嵌入 -->
     <section class="hero">
+      <aside class="notes">向量化 = 给每个 token 一个高维身份证。维度通常 768/4096/12288。语义相近 → 向量相近。这是后面 RAG 的物理基础。</aside>
       <h1>每个 token<br>=<br><span class="accent">一个向量</span></h1>
       <p class="fragment fade-up">维度 768 / 4096 / 12288 不等。语义相近 → 向量相近。</p>
     </section>
 
     <!-- 6. 上下文窗口 -->
     <section class="list">
+      <aside class="notes">上下文窗口：4K/128K/1M/2M 是几代演进。强调'中间丢失'：长上下文不等于真的看完了，关键信息靠前/靠后才更稳。</aside>
       <h2>上下文窗口</h2>
       <ul>
         <li class="fragment"><strong>4K</strong> · GPT-3.5 时代标配</li>
@@ -76,11 +82,13 @@ print([enc.decode([t]) for t in tokens])
 
     <!-- 7. 自回归生成 -->
     <section class="number">
+      <aside class="notes">→ 大箭头一张：自回归就是一字一字往外吐，到 EOS 或 max_tokens 停。</aside>
       <div class="num">→</div>
       <div class="label">一个 token<br>一个 token 吐</div>
     </section>
 
     <section class="terminal">
+      <aside class="notes">代码块讲清楚每一步状态。这是理解流式输出（SSE）的基础。</aside>
       <h2>autoregressive</h2>
 <pre><code class="language-python" data-trim>
 prompt = "今天天气"
@@ -93,12 +101,14 @@ prompt = "今天天气"
 
     <!-- 8. 三段式训练 -->
     <section class="hero">
+      <aside class="notes">三段式训练。我喜欢用三个比喻：Pretrain = 通读图书馆 / SFT = 培训对话礼仪 / RLHF = 学得体的回答。</aside>
       <h1>三段式<br>训练</h1>
       <p class="fragment fade-up"><strong>Pretrain → SFT → RLHF/DPO</strong></p>
     </section>
 
     <!-- 9. Pretrain -->
     <section class="list">
+      <aside class="notes">Pretrain 用了万亿 token，烧掉 99% 算力。这一阶段决定了模型的'底层世界观'。</aside>
       <h2>① Pretrain · 预训练</h2>
       <ul>
         <li class="fragment">数据：互联网 + 书籍 + 代码，<strong>万亿级 token</strong></li>
@@ -111,6 +121,7 @@ prompt = "今天天气"
 
     <!-- 10. SFT -->
     <section class="list">
+      <aside class="notes">SFT 把'续写'改造成'对话'。规模从万到百万级，质量重于数量。</aside>
       <h2>② SFT · 监督微调</h2>
       <ul>
         <li class="fragment">数据：高质量 <strong>(指令, 答案)</strong> 对</li>
@@ -122,6 +133,7 @@ prompt = "今天天气"
 
     <!-- 11. RLHF -->
     <section class="list">
+      <aside class="notes">RLHF/DPO 让模型符合人类偏好。DPO 比 RLHF 简单得多，正在成为主流。</aside>
       <h2>③ RLHF / DPO · 偏好对齐</h2>
       <ul>
         <li class="fragment">数据：人类对两个回答打分（好/坏）</li>
@@ -134,11 +146,13 @@ prompt = "今天天气"
 
     <!-- 12. 幻觉 -->
     <section class="quote">
+      <aside class="notes">幻觉是特性不是 bug — 这一句要重点。原因：本质就是概率采样，没有'我知道我不知道'的元能力。</aside>
       <p class="saying">幻觉<br>不是 bug，<br>是<span class="accent">特性</span>。</p>
       <p class="author">概率采样的代价</p>
     </section>
 
     <section class="list">
+      <aside class="notes">解药四件套：RAG / 工具调用 / 引用核对 / 推理模型。下一节专讲 Transformer 内部，再下两节讲 RAG/Agent 来对治幻觉。</aside>
       <h2>幻觉为什么存在</h2>
       <ul>
         <li class="fragment"><strong>本质</strong>：LLM 永远在"概率最高的下一个词"</li>
@@ -151,6 +165,7 @@ prompt = "今天天气"
 
     <!-- 13. 温度 / Top-p -->
     <section class="list">
+      <aside class="notes">采样参数实战：抽取/分类/代码用 0；创作用 0.7-1。Top-p 比 Top-k 更平滑。frequency_penalty 解决重复啰嗦。</aside>
       <h2>采样参数</h2>
       <ul>
         <li class="fragment"><strong>temperature</strong> · 0 = 确定 / 1 = 创造</li>
@@ -163,6 +178,7 @@ prompt = "今天天气"
 
     <!-- 14. 总结 + 预告 -->
     <section class="summary">
+      <aside class="notes">总结一图记住：Token → Embedding → Self-Attention → 自回归生成。下一课进入 Transformer 内部。</aside>
       <h2>本课收获</h2>
       <div class="keywords">
         <span class="kw">Token / Embedding</span>

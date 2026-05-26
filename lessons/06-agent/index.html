@@ -15,17 +15,20 @@
   <div class="slides">
 
     <section class="cover">
+      <aside class="notes">Agent 是 2024-2025 最火的方向。但失败案例也最多。本节既讲怎么用，也讲怎么不死。</aside>
       <div class="episode">LESSON · 06</div>
       <h1>让 LLM<br><span class="accent">自己</span><br>干活</h1>
       <p class="slogan">Agent · 智能体的核心范式与典型框架。</p>
     </section>
 
     <section class="hero">
+      <aside class="notes">Agent = LLM + 工具。再加上记忆和规划，再加上循环，就是完整四件套。</aside>
       <h1>Agent =<br>LLM<br>+ <span class="accent">工具</span></h1>
       <p class="fragment fade-up">+ 记忆 + 规划 + 循环。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">四件套是脚手架，不要用一个完美定义来理解 Agent，用'能做什么'来理解。</aside>
       <h2>四件套</h2>
       <ul>
         <li class="fragment"><strong>大脑</strong>：LLM 决策与规划</li>
@@ -36,6 +39,7 @@
     </section>
 
     <section class="terminal">
+      <aside class="notes">ReAct 循环：思考 → 行动 → 观察 → 再思考。这是 Agent 的最基本骨架。所有高级框架都围绕这个循环展开。</aside>
       <h2>react loop</h2>
 <pre><code class="language-text" data-trim>
 Question: 杭州明天天气如何？
@@ -48,6 +52,7 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="list">
+      <aside class="notes">Tool Use = Function Calling + 多工具并行。现代旗舰模型都能一次返回多个并行调用。</aside>
       <h2>Tool Use · 工具调用</h2>
       <ul>
         <li class="fragment"><strong>Function Calling</strong>：模型输出结构化函数调用</li>
@@ -58,6 +63,7 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="terminal">
+      <aside class="notes">工具数量经验：≤ 20 是甜区。再多模型容易'选困难'，需要分层路由。</aside>
       <h2>function calling</h2>
 <pre><code class="language-json" data-trim>
 {
@@ -76,6 +82,7 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="list">
+      <aside class="notes">Function Calling 的 Schema 写法。一定要写好 description，模型靠它决定何时调用哪个工具。</aside>
       <h2>记忆系统</h2>
       <ul>
         <li class="fragment"><strong>短期</strong>：当前对话窗口（messages 数组）</li>
@@ -86,11 +93,13 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="hero">
+      <aside class="notes">记忆三层：短期对话窗口 / 长期向量化 / 结构化用户档案。要有'遗忘'机制，否则成本失控。</aside>
       <h1>规划<br><span class="accent">能力</span></h1>
       <p class="fragment fade-up">从"边走边想"到"先想再走"。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">规划是 Agent 真正进阶的标志。Plan-and-Execute 适合明确流程；Tree of Thoughts 适合搜索；Reflection 适合可回头重做的任务。</aside>
       <h2>规划方法</h2>
       <ul>
         <li class="fragment"><strong>Plan-and-Execute</strong>：先列计划，再逐步执行</li>
@@ -101,6 +110,7 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="list">
+      <aside class="notes">多 Agent 协作：分工 / 辩论 / 流水线 / 层级。提醒：多 Agent 不是银弹，简单任务单 Agent 就够。</aside>
       <h2>多 Agent 协作</h2>
       <ul>
         <li class="fragment"><strong>角色分工</strong>：PM / Coder / Reviewer / Tester</li>
@@ -111,11 +121,13 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="hero">
+      <aside class="notes">MCP 是 Anthropic 推的工具协议标准，类比 LSP 之于编辑器。今年的趋势：写一次 MCP server，所有客户端都能用。</aside>
       <h1>MCP<br><span class="accent">协议</span></h1>
       <p class="fragment fade-up">Anthropic 推的"Agent 工具的 USB-C"。</p>
     </section>
 
     <section class="list">
+      <aside class="notes">MCP 的关键价值：解耦工具实现和 Agent。下一年估计会爆发。</aside>
       <h2>MCP 是什么</h2>
       <ul>
         <li class="fragment"><strong>Model Context Protocol</strong></li>
@@ -127,6 +139,7 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="list">
+      <aside class="notes">框架选型：LangGraph 控制力最强；CrewAI 多 Agent 写得最爽；OpenAI Swarm 极简学习用；Smol Agents 教学友好。</aside>
       <h2>主流框架</h2>
       <ul>
         <li class="fragment"><strong>LangGraph</strong> · 状态机驱动，控制力强</li>
@@ -138,6 +151,7 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="list">
+      <aside class="notes">失败模式四件套：死循环 / 幻觉决策 / 成本失控 / 过度自信。任何 Agent 上线必须设步数+成本+超时上限。</aside>
       <h2>失败模式</h2>
       <ul>
         <li class="fragment"><strong>死循环</strong>：相同的工具反复调用</li>
@@ -149,6 +163,7 @@ Final Answer: 杭州明天多云，22-30℃，降水 20%。
     </section>
 
     <section class="list">
+      <aside class="notes">实战场景：编码 Agent 已成熟，浏览器 Agent 在爆发，数据分析靠 Code Interpreter。下一课讲微调。</aside>
       <h2>实战场景</h2>
       <ul>
         <li class="fragment"><strong>编码 Agent</strong>：Cursor / Claude Code / Devin</li>
