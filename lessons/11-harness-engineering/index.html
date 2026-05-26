@@ -57,76 +57,101 @@
       <p class="fragment fade-up">套在模型外面的工程系统：约束 + 验证 + 追溯 + 回退 + 沉淀 + 审批。</p>
     </section>
 
-    <!-- 6. 全景图 — 交互 SVG -->
+    <!-- 6. 全景图 — 交互 SVG（修正版最佳实践流程） -->
     <section>
-      <aside class="notes">Harness = 套在模型外面的工程系统。六要素：约束 / 验证 / 追溯 / 回退 / 沉淀 / 审批。</aside>
-      <h2 style="font-size:1.6em;color:var(--poster-accent);margin-bottom:0.3em">Harness 全景图 <span style="font-size:0.5em;color:var(--poster-mute)">(点击节点高亮)</span></h2>
-      <svg class="svg-diagram" viewBox="0 0 920 340" style="max-width:100%;height:auto">
-        <!-- 主流线 -->
+      <aside class="notes">最佳实践流程：输入→约束→模型→验证→(通过)审批→输出；验证失败→回退；追溯贯穿全程；沉淀从追溯+回退中学习反馈回约束和验证规则。</aside>
+      <h2 style="font-size:1.6em;color:var(--poster-accent);margin-bottom:0.3em">Harness 最佳实践流程 <span style="font-size:0.5em;color:var(--poster-mute)">(点击节点高亮)</span></h2>
+      <svg class="svg-diagram" viewBox="0 0 950 400" style="max-width:100%;height:auto">
+        <!-- ===== 主流线（上半区）===== -->
         <g id="h-input" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="20" y="130" width="100" height="50" rx="10" fill="#222" stroke="#888" stroke-width="2"/>
-          <text x="70" y="160" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">📥 输入</text>
+          <rect x="15" y="120" width="90" height="50" rx="10" fill="#222" stroke="#888" stroke-width="2"/>
+          <text x="60" y="150" fill="#fff" font-size="13" text-anchor="middle" font-weight="700">📥 输入</text>
         </g>
-        <line x1="120" y1="155" x2="170" y2="155" stroke="#FACC15" stroke-width="2" class="flow-line"/>
-        <polygon points="165,150 175,155 165,160" fill="#FACC15"/>
+        <line x1="105" y1="145" x2="145" y2="145" stroke="#FACC15" stroke-width="2" class="flow-line"/>
+        <polygon points="140,140 150,145 140,150" fill="#FACC15"/>
 
         <g id="h-constraint" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="175" y="125" width="110" height="60" rx="10" fill="#FACC1522" stroke="#FACC15" stroke-width="3"/>
-          <text x="230" y="150" fill="#FACC15" font-size="13" text-anchor="middle" font-weight="900">🔒 约束</text>
-          <text x="230" y="170" fill="#aaa" font-size="10" text-anchor="middle">边界/预算/护栏</text>
+          <rect x="150" y="115" width="115" height="60" rx="10" fill="#FACC1522" stroke="#FACC15" stroke-width="3"/>
+          <text x="207" y="140" fill="#FACC15" font-size="12" text-anchor="middle" font-weight="900">🔒 约束</text>
+          <text x="207" y="158" fill="#aaa" font-size="9" text-anchor="middle">输入护栏/预算/边界</text>
         </g>
-        <line x1="285" y1="155" x2="340" y2="155" stroke="#FACC15" stroke-width="2" class="flow-line" style="animation-delay:0.3s"/>
-        <polygon points="335,150 345,155 335,160" fill="#FACC15"/>
+        <line x1="265" y1="145" x2="310" y2="145" stroke="#FACC15" stroke-width="2" class="flow-line" style="animation-delay:0.3s"/>
+        <polygon points="305,140 315,145 305,150" fill="#FACC15"/>
 
         <g id="h-model" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="345" y="115" width="170" height="80" rx="14" fill="#333" stroke="#fff" stroke-width="3"/>
-          <text x="430" y="148" fill="#fff" font-size="15" text-anchor="middle" font-weight="900">🧠 模型</text>
-          <text x="430" y="170" fill="#aaa" font-size="10" text-anchor="middle">理解 · 生成 · 推理 · 工具</text>
+          <rect x="315" y="110" width="150" height="70" rx="14" fill="#333" stroke="#fff" stroke-width="3"/>
+          <text x="390" y="140" fill="#fff" font-size="14" text-anchor="middle" font-weight="900">🧠 模型</text>
+          <text x="390" y="160" fill="#aaa" font-size="9" text-anchor="middle">理解 · 生成 · 推理 · 工具</text>
         </g>
-        <line x1="515" y1="155" x2="570" y2="155" stroke="#FACC15" stroke-width="2" class="flow-line" style="animation-delay:0.6s"/>
-        <polygon points="565,150 575,155 565,160" fill="#FACC15"/>
+        <line x1="465" y1="145" x2="510" y2="145" stroke="#FACC15" stroke-width="2" class="flow-line" style="animation-delay:0.6s"/>
+        <polygon points="505,140 515,145 505,150" fill="#FACC15"/>
 
         <g id="h-verify" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="575" y="125" width="110" height="60" rx="10" fill="#06FFA522" stroke="#06FFA5" stroke-width="3"/>
-          <text x="630" y="150" fill="#06FFA5" font-size="13" text-anchor="middle" font-weight="900">✅ 验证</text>
-          <text x="630" y="170" fill="#aaa" font-size="10" text-anchor="middle">语法/规则/事实</text>
+          <rect x="515" y="115" width="115" height="60" rx="10" fill="#06FFA522" stroke="#06FFA5" stroke-width="3"/>
+          <text x="572" y="140" fill="#06FFA5" font-size="12" text-anchor="middle" font-weight="900">✅ 验证</text>
+          <text x="572" y="158" fill="#aaa" font-size="9" text-anchor="middle">输出护栏/规则/事实</text>
         </g>
-        <line x1="685" y1="155" x2="740" y2="155" stroke="#06FFA5" stroke-width="2" class="flow-line" style="animation-delay:0.9s"/>
-        <polygon points="735,150 745,155 735,160" fill="#06FFA5"/>
+
+        <!-- 验证通过 → 审批 → 输出 -->
+        <line x1="630" y1="135" x2="670" y2="135" stroke="#06FFA5" stroke-width="2" class="flow-line" style="animation-delay:0.9s"/>
+        <text x="650" y="125" fill="#06FFA5" font-size="9" text-anchor="middle">通过</text>
+        <polygon points="665,130 675,135 665,140" fill="#06FFA5"/>
+
+        <g id="h-approve" class="node" onclick="hlNode(this)" style="cursor:pointer">
+          <rect x="675" y="110" width="115" height="60" rx="10" fill="#EC489922" stroke="#EC4899" stroke-width="3"/>
+          <text x="732" y="135" fill="#EC4899" font-size="12" text-anchor="middle" font-weight="900">🛑 审批</text>
+          <text x="732" y="153" fill="#aaa" font-size="9" text-anchor="middle">HITL/风险分级</text>
+        </g>
+        <line x1="790" y1="145" x2="835" y2="145" stroke="#EC4899" stroke-width="2" class="flow-line" style="animation-delay:1.2s"/>
+        <polygon points="830,140 840,145 830,150" fill="#EC4899"/>
 
         <g id="h-output" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="745" y="130" width="100" height="50" rx="10" fill="#222" stroke="#888" stroke-width="2"/>
-          <text x="795" y="160" fill="#fff" font-size="14" text-anchor="middle" font-weight="700">📤 输出</text>
+          <rect x="840" y="120" width="90" height="50" rx="10" fill="#222" stroke="#888" stroke-width="2"/>
+          <text x="885" y="150" fill="#fff" font-size="13" text-anchor="middle" font-weight="700">📤 输出</text>
         </g>
 
-        <!-- 上方：审批 -->
-        <g id="h-approve" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="250" y="20" width="120" height="50" rx="10" fill="#EC489922" stroke="#EC4899" stroke-width="2"/>
-          <text x="310" y="50" fill="#EC4899" font-size="13" text-anchor="middle" font-weight="900">🛑 审批</text>
-        </g>
-        <path d="M 230 125 L 230 70 L 250 55" stroke="#EC4899" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
-
-        <!-- 下方：追溯 + 回退 -->
-        <g id="h-trace" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="500" y="250" width="120" height="50" rx="10" fill="#00D9FF22" stroke="#00D9FF" stroke-width="2"/>
-          <text x="560" y="280" fill="#00D9FF" font-size="13" text-anchor="middle" font-weight="900">📋 追溯</text>
-        </g>
-        <path d="M 630 185 L 630 230 L 620 250" stroke="#00D9FF" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
+        <!-- ===== 验证失败 → 回退（下方分支）===== -->
+        <path d="M 572 175 L 572 220" stroke="#FF3366" stroke-width="2" class="flow-line" style="animation-delay:1s"/>
+        <text x="590" y="200" fill="#FF3366" font-size="9">失败</text>
+        <polygon points="567,215 572,225 577,215" fill="#FF3366"/>
 
         <g id="h-fallback" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="650" y="250" width="120" height="50" rx="10" fill="#FF336622" stroke="#FF3366" stroke-width="2"/>
-          <text x="710" y="280" fill="#FF3366" font-size="13" text-anchor="middle" font-weight="900">↩️ 回退</text>
+          <rect x="490" y="225" width="160" height="55" rx="10" fill="#FF336622" stroke="#FF3366" stroke-width="3"/>
+          <text x="570" y="248" fill="#FF3366" font-size="12" text-anchor="middle" font-weight="900">↩️ 回退</text>
+          <text x="570" y="266" fill="#aaa" font-size="9" text-anchor="middle">重试/降级/熔断/人工</text>
         </g>
-        <path d="M 660 185 L 680 230 L 680 250" stroke="#FF3366" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
+        <!-- 回退可重回模型 -->
+        <path d="M 490 252 L 430 252 L 390 180" stroke="#FF3366" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
+        <text x="430" y="230" fill="#666" font-size="9">重试</text>
 
-        <!-- 底部：沉淀 -->
-        <g id="h-distill" class="node" onclick="hlNode(this)" style="cursor:pointer">
-          <rect x="330" y="270" width="130" height="50" rx="10" fill="#FFD93D22" stroke="#FFD93D" stroke-width="2"/>
-          <text x="395" y="300" fill="#FFD93D" font-size="13" text-anchor="middle" font-weight="900">📚 沉淀</text>
+        <!-- ===== 追溯（贯穿底部）===== -->
+        <g id="h-trace" class="node" onclick="hlNode(this)" style="cursor:pointer">
+          <rect x="130" y="320" width="700" height="45" rx="10" fill="#00D9FF0a" stroke="#00D9FF" stroke-width="2" stroke-dasharray="8,4"/>
+          <text x="480" y="347" fill="#00D9FF" font-size="12" text-anchor="middle" font-weight="900">📋 追溯 · trace_id 贯穿全链路（输入 → 约束 → 模型 → 验证 → 审批 → 输出）</text>
         </g>
-        <path d="M 500 275 L 460 275" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
-        <path d="M 395 270 L 395 195 L 345 170" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end=""/>
-        <text x="365" y="240" fill="#666" font-size="10" transform="rotate(-70 365 240)">改进</text>
+        <!-- 连线：各节点到追溯 -->
+        <line x1="207" y1="175" x2="207" y2="320" stroke="#00D9FF" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+        <line x1="390" y1="180" x2="390" y2="320" stroke="#00D9FF" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+        <line x1="572" y1="175" x2="572" y2="280" stroke="#00D9FF" stroke-width="1" stroke-dasharray="3,3" opacity="0.15"/>
+        <line x1="732" y1="170" x2="732" y2="320" stroke="#00D9FF" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+
+        <!-- ===== 沉淀（左下角，从追溯+回退学习反馈回约束）===== -->
+        <g id="h-distill" class="node" onclick="hlNode(this)" style="cursor:pointer">
+          <rect x="15" y="230" width="140" height="55" rx="10" fill="#FFD93D22" stroke="#FFD93D" stroke-width="2"/>
+          <text x="85" y="253" fill="#FFD93D" font-size="12" text-anchor="middle" font-weight="900">📚 沉淀</text>
+          <text x="85" y="270" fill="#aaa" font-size="9" text-anchor="middle">规则化/回归集/改Prompt</text>
+        </g>
+        <!-- 从回退学 -->
+        <path d="M 490 265 L 155 265" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
+        <text x="320" y="260" fill="#666" font-size="9">失败案例归类</text>
+        <!-- 从追溯学 -->
+        <path d="M 130 340 L 85 340 L 85 285" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
+        <text x="50" y="315" fill="#666" font-size="9">分析日志</text>
+        <!-- 沉淀反馈回约束 -->
+        <path d="M 85 230 L 85 175 L 150 155" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
+        <text x="60" y="195" fill="#FFD93D" font-size="9" transform="rotate(-60 60 195)">改进</text>
+        <!-- 沉淀反馈回验证 -->
+        <path d="M 155 240 L 515 240 L 515 175" stroke="#FFD93D" stroke-width="1" stroke-dasharray="4,4" fill="none" opacity="0.5"/>
       </svg>
       <script>
         function hlNode(el){
