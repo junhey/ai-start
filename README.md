@@ -4,7 +4,7 @@
 
 ## 这是什么
 
-10 节精选课，从 AI 全景图讲到 AGI 未来，技术原理 + 工具实战 + 伦理思辨全覆盖。  
+11 节课，从 AI 全景到 AGI 未来 + Harness 工程，原理 + 实战 + 伦理 + 落地全覆盖。  
 基于 Reveal.js，纯静态 HTML，**双击 `index.html` 直接看**。
 
 ## 课程目录
@@ -21,6 +21,7 @@
 | 08 | **多模态 AI** | 🌈 渐变 | [打开](lessons/08-multimodal/index.html) |
 | 09 | **AI Coding 实战** | 💚 终端绿 | [打开](lessons/09-ai-coding/index.html) |
 | 10 | **伦理、风险与未来** | ⚫ 灰红 | [打开](lessons/10-ethics-future/index.html) |
+| 11 | **Harness 工程** | 🟨 黄黑 | [打开](lessons/11-harness-engineering/index.html) |
 
 ## 快速开始
 
@@ -65,10 +66,10 @@ ai-start/
 │   ├── css/poster-theme.css
 │   ├── js/common.js
 │   └── img/
-├── lessons/                # 10 节课
+├── lessons/                # 11 节课
 │   ├── 01-ai-overview/index.html
 │   ├── ...
-│   └── 10-ethics-future/index.html
+│   └── 11-harness-engineering/index.html
 └── docs/
     └── COURSE_OUTLINE.md   # 详细大纲
 ```

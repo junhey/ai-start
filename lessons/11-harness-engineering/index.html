@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11 · Harness Engineering | AI START</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/css/poster-theme.css">
+</head>
+<body class="lesson-11">
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 -->
+    <section class="cover">
+      <div class="episode">LESSON · 11</div>
+      <h1>给模型<br>套上<br><span class="accent">缰绳</span></h1>
+      <p class="slogan">Harness Engineering · 让 AI 真正能上生产。</p>
+    </section>
+
+    <!-- 2. 灵魂拷问 -->
+    <section class="hero">
+      <h1>能用<br>≠<br><span class="accent">够用</span></h1>
+      <p class="fragment fade-up">Demo 跑通是 5%，剩下 95% 是工程。</p>
+    </section>
+
+    <!-- 3. 模型能力四件套 -->
+    <section class="list">
+      <h2>模型能力 · 四件套</h2>
+      <ul>
+        <li class="fragment"><strong>理解</strong> · 看懂输入：文本 / 图像 / 代码 / 数据</li>
+        <li class="fragment"><strong>生成</strong> · 产出输出：文本 / 代码 / 图 / 决策</li>
+        <li class="fragment"><strong>推理</strong> · 多步思考：规划、因果、反思</li>
+        <li class="fragment"><strong>调用工具</strong> · 走出沙盒：函数 / API / Shell / RAG</li>
+        <li class="fragment mute">这四件套是模型的"原始马力"</li>
+      </ul>
+    </section>
+
+    <!-- 4. 但是… -->
+    <section class="quote">
+      <p class="saying">原始马力大<br>≠<br><span class="accent">能拉车</span></p>
+      <p class="author">没有缰绳，马力越大越危险</p>
+    </section>
+
+    <!-- 5. Harness 是什么 -->
+    <section class="hero">
+      <h1>Harness<br>=<br><span class="accent">缰绳</span></h1>
+      <p class="fragment fade-up">套在模型外面的工程系统：约束 + 验证 + 追溯 + 回退 + 沉淀 + 审批。</p>
+    </section>
+
+    <!-- 6. 全景图 -->
+    <section class="terminal">
+      <h2>harness pipeline</h2>
+<pre><code class="language-text" data-trim>
+[ 输入 ] → 约束 ──► 模型(理解/生成/推理/工具) ──► 验证 ──► [ 输出 ]
+            │                                       │
+            ↓                                       ↓
+         审批门                                   追溯 / 回退
+            │                                       │
+            └─────────►   沉淀（学习 → 改进）◄───────┘
+</code></pre>
+    </section>
+
+    <!-- 7. 约束 -->
+    <section class="list">
+      <h2>① 约束 · Constraint</h2>
+      <ul>
+        <li class="fragment"><strong>边界</strong>：能做什么 / 不能做什么（白/黑名单）</li>
+        <li class="fragment"><strong>预算</strong>：步数 / token / 时间 / 金额上限</li>
+        <li class="fragment"><strong>资源</strong>：哪些工具能调、哪些目录能写</li>
+        <li class="fragment"><strong>输入护栏</strong>：长度截断、敏感词过滤、注入防御</li>
+        <li class="fragment"><strong>输出护栏</strong>：JSON Schema、内容审核、PII 脱敏</li>
+        <li class="fragment accent">→ 越自由的模型，越需要明确的边界</li>
+      </ul>
+    </section>
+
+    <!-- 8. 验证 -->
+    <section class="list">
+      <h2>② 验证 · Verification</h2>
+      <ul>
+        <li class="fragment"><strong>语法验证</strong>：JSON / SQL / 代码可解析</li>
+        <li class="fragment"><strong>规则验证</strong>：必填字段、值域、引用完整性</li>
+        <li class="fragment"><strong>事实验证</strong>：引用是否在 RAG 检索结果里</li>
+        <li class="fragment"><strong>测试验证</strong>：跑单测 / 仿真 / dry-run</li>
+        <li class="fragment"><strong>双 LLM 互检</strong>：Critic 角色复核</li>
+        <li class="fragment mute">"信任但验证" — 验证失败 = 重试或回退</li>
+      </ul>
+    </section>
+
+    <!-- 9. 追溯 -->
+    <section class="list">
+      <h2>③ 追溯 · Traceability</h2>
+      <ul>
+        <li class="fragment"><strong>请求级</strong>：trace_id 串起每一次调用</li>
+        <li class="fragment"><strong>步骤级</strong>：每个 thought / action / observation 都存</li>
+        <li class="fragment"><strong>引用级</strong>：答案的每一句来自哪段证据</li>
+        <li class="fragment"><strong>版本级</strong>：模型版本 + Prompt 版本 + 工具版本</li>
+        <li class="fragment"><strong>工具</strong>：LangSmith / Langfuse / Phoenix / 自建</li>
+        <li class="fragment accent">→ 能"复盘"的系统，才能"改进"</li>
+      </ul>
+    </section>
+
+    <!-- 10. 回退 -->
+    <section class="list">
+      <h2>④ 回退 · Fallback</h2>
+      <ul>
+        <li class="fragment"><strong>重试策略</strong>：指数退避、max retries、温度抖动</li>
+        <li class="fragment"><strong>降级方案</strong>：旗舰模型→中模型→规则脚本</li>
+        <li class="fragment"><strong>断路器</strong>：连续失败 N 次熔断，避免雪崩</li>
+        <li class="fragment"><strong>事务回滚</strong>：写库 / 发邮件等副作用必须可撤销</li>
+        <li class="fragment"><strong>人工兜底</strong>：模型放弃时切到客服</li>
+        <li class="fragment mute">回退 = 别让一次失败，毁掉整条流程</li>
+      </ul>
+    </section>
+
+    <!-- 11. 沉淀 -->
+    <section class="list">
+      <h2>⑤ 沉淀 · Distillation</h2>
+      <ul>
+        <li class="fragment"><strong>从日志学</strong>：失败模式归类、典型错误打标</li>
+        <li class="fragment"><strong>更新 Prompt</strong>：把教训写进 SYSTEM</li>
+        <li class="fragment"><strong>沉淀到规则</strong>：高频场景固化为代码</li>
+        <li class="fragment"><strong>构建评测集</strong>：把 bug 变成回归用例</li>
+        <li class="fragment"><strong>反哺微调</strong>：积累足够数据后做 SFT/DPO</li>
+        <li class="fragment accent">→ 系统越用越聪明，而不是越用越混乱</li>
+      </ul>
+    </section>
+
+    <!-- 12. 审批 -->
+    <section class="list">
+      <h2>⑥ 审批 · Approval</h2>
+      <ul>
+        <li class="fragment"><strong>风险分级</strong>：只读 / 可逆写 / 不可逆写 / 高风险</li>
+        <li class="fragment"><strong>HITL · Human in the Loop</strong>：高风险操作必须人确认</li>
+        <li class="fragment"><strong>审批链</strong>：金额阶梯 → 不同审批人</li>
+        <li class="fragment"><strong>预览 + diff</strong>：让人看清"将要改什么"</li>
+        <li class="fragment"><strong>审计留痕</strong>：谁在何时批准了什么</li>
+        <li class="fragment mute">越自动化的系统，越需要"刹车手"</li>
+      </ul>
+    </section>
+
+    <!-- 13. 全景对比 -->
+    <section class="vs">
+      <h2>没 Harness vs 有 Harness</h2>
+      <div class="vs-grid">
+        <div class="vs-side left">
+          <h3>裸调模型</h3>
+          <ul>
+            <li>Demo 5 分钟搞定</li>
+            <li>线上 5 天就翻车</li>
+            <li>错了不知道为什么</li>
+            <li>改不动也回不去</li>
+          </ul>
+        </div>
+        <div class="vs-mark">→</div>
+        <div class="vs-side right">
+          <h3>带 Harness</h3>
+          <ul>
+            <li>初期慢一点</li>
+            <li>越跑越稳</li>
+            <li>错了能定位</li>
+            <li>能改也能回</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. 实战清单 -->
+    <section class="terminal">
+      <h2>checklist</h2>
+<pre><code class="language-text" data-trim>
+[ ] 输入 schema 校验
+[ ] 输出 JSON 严格模式
+[ ] 步数 / 成本 / 超时上限
+[ ] trace_id 全链路追踪
+[ ] 错误分类 + 重试 + 熔断
+[ ] 高风险操作必须人审批
+[ ] 失败用例进回归集
+[ ] 模型 / Prompt / 工具的版本号
+[ ] 仪表盘：延迟 / 成功率 / 成本
+[ ] 红队评测 + 上线 A/B
+</code></pre>
+    </section>
+
+    <!-- 15. 主流落地 -->
+    <section class="list">
+      <h2>主流落地工具</h2>
+      <ul>
+        <li class="fragment"><strong>编排</strong> · LangGraph / Temporal / Restate</li>
+        <li class="fragment"><strong>验证</strong> · Guardrails / Pydantic / JSON Schema</li>
+        <li class="fragment"><strong>观测</strong> · Langfuse / LangSmith / Phoenix</li>
+        <li class="fragment"><strong>评测</strong> · Promptfoo / Ragas / OpenAI Evals</li>
+        <li class="fragment"><strong>审批</strong> · Slack/IM 审批机器人 + 自建工作流</li>
+      </ul>
+    </section>
+
+    <!-- 16. 金句 -->
+    <section class="quote">
+      <p class="saying">模型管<span class="accent">智能</span>，<br>Harness 管<span class="accent">可靠</span>。<br>缺一不可。</p>
+      <p class="author">AI 工程的两条腿</p>
+    </section>
+
+    <!-- 17. 总结 -->
+    <section class="summary">
+      <h2>本课收获</h2>
+      <div class="keywords">
+        <span class="kw">模型四件套</span>
+        <span class="kw">约束 / 验证</span>
+        <span class="kw">追溯 / 回退</span>
+        <span class="kw">沉淀 / 审批</span>
+        <span class="kw">实战清单</span>
+      </div>
+      <p class="next">回到门户 · <strong>从今天起，给你的 AI 套上缰绳。</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="../../assets/js/common.js"></script>
+<script>initLesson();</script>
+</body>
+</html>

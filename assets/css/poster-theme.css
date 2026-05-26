@@ -400,6 +400,7 @@ body.lesson-07 { --poster-accent: #EC4899; --poster-bg: #0a0a0a; }
 body.lesson-08 { --poster-accent: #A78BFA; --poster-bg: #0c0a1f; }
 body.lesson-09 { --poster-accent: #10B981; --poster-bg: #050a08; }
 body.lesson-10 { --poster-accent: #DC2626; --poster-bg: #0a0a0a; }
+body.lesson-11 { --poster-accent: #FACC15; --poster-bg: #0a0a0a; }
 
 /* === 控件颜色 === */
 .reveal .controls {
