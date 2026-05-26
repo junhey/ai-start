@@ -128,6 +128,33 @@
 </code></pre>
     </section>
 
+    <section class="terminal">
+      <aside class="notes">完整 Function Calling 流程：定义工具 → 发请求 → 解析 tool_calls。注意模型不会真的执行函数，你要自己调。</aside>
+      <h2>function calling 完整代码</h2>
+<pre><code class="language-python" data-trim>
+from openai import OpenAI
+client = OpenAI()
+
+tools = [{"type": "function", "function": {
+    "name": "get_weather",
+    "description": "查询城市天气",
+    "parameters": {"type": "object", "properties": {
+        "city": {"type": "string"}
+    }, "required": ["city"]}
+}}]
+
+resp = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "杭州天气如何？"}],
+    tools=tools
+)
+
+# 解析 tool_calls
+tool_call = resp.choices[0].message.tool_calls[0]
+print(f"调用: {tool_call.function.name}({tool_call.function.arguments})")
+</code></pre>
+    </section>
+
     <section class="list">
       <aside class="notes">Function Calling 的 Schema 写法。一定要写好 description，模型靠它决定何时调用哪个工具。</aside>
       <h2>记忆系统</h2>
@@ -185,15 +212,32 @@
       </ul>
     </section>
 
+    <section class="terminal">
+      <aside class="notes">最小 MCP Server 只需 5 行核心代码。用 FastMCP 装饰器声明工具，stdio 模式启动即可被客户端发现。</aside>
+      <h2>最小 MCP Server</h2>
+<pre><code class="language-python" data-trim>
+# pip install mcp
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("demo")
+
+@mcp.tool()
+def add(a: int, b: int) -> int:
+    """两数相加"""
+    return a + b
+
+mcp.run()  # stdio 模式启动
+</code></pre>
+    </section>
+
     <section class="list">
-      <aside class="notes">框架选型：LangGraph 控制力最强；CrewAI 多 Agent 写得最爽；OpenAI Swarm 极简学习用；Smol Agents 教学友好。</aside>
-      <h2>主流框架</h2>
+      <aside class="notes">框架选型：LangGraph 控制力最强适合复杂流程；CrewAI 多角色分工最爽；OpenAI Agents SDK 极简但新；Autogen 偏研究探索。</aside>
+      <h2>框架选型决策表</h2>
       <ul>
-        <li class="fragment"><strong>LangGraph</strong> · 状态机驱动，控制力强</li>
-        <li class="fragment"><strong>LlamaIndex</strong> · 检索 + Agent 一体化</li>
-        <li class="fragment"><strong>AutoGen / CrewAI</strong> · 多 Agent 协作首选</li>
-        <li class="fragment"><strong>OpenAI Swarm</strong> · 极简多 Agent</li>
-        <li class="fragment"><strong>Smol Agents</strong> · HuggingFace 出品</li>
+        <li class="fragment"><strong>LangGraph</strong> · 状态机驱动，控制力最强 · 复杂流程 · <span class="mono">学习曲线中</span></li>
+        <li class="fragment"><strong>CrewAI</strong> · 多角色协作，分工明确 · 多 Agent · <span class="mono">学习曲线低</span></li>
+        <li class="fragment"><strong>OpenAI Agents SDK</strong> · 官方出品，极简 API · <span class="mono">2025 新，生态建设中</span></li>
+        <li class="fragment"><strong>Autogen</strong> · 微软出品，适合研究探索 · <span class="mono">重量级</span></li>
       </ul>
     </section>
 

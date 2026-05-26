@@ -56,6 +56,30 @@
       </ul>
     </section>
 
+    <section class="terminal">
+      <aside class="notes">CLAUDE.md / .cursorrules 放在项目根目录，AI 工具启动时自动读取。把项目技术栈、团队规范、禁区全写进去，相当于给 AI 一份"入职指南"。模板可直接复制使用。</aside>
+      <h2>真实 CLAUDE.md / .cursorrules 模板</h2>
+<pre><code class="language-markdown" data-trim>
+# CLAUDE.md 示例（放在项目根目录）
+
+## 项目信息
+- 前端：React 18 + TypeScript strict + Vite
+- 测试：Vitest + @testing-library/react
+- 样式：Tailwind CSS，不用 styled-components
+
+## 规则
+- 所有函数必须有 JSDoc 注释
+- 禁止修改 src/core/ 目录（核心模块由架构组维护）
+- commit message 用 Conventional Commits
+- 新组件必须有对应 .test.tsx
+
+## 偏好
+- 优先用 composition 而非继承
+- 错误处理用 Result 模式，不用 try-catch
+- 日志用 pino，不用 console.log
+</code></pre>
+    </section>
+
     <section class="vs">
       <aside class="notes">工具对比：IDE 类适合'所见即所得'；CLI Agent 类适合命令行原生 + 自动化场景。两类都装，按场景选。</aside>
       <h2>主流工具对比</h2>
@@ -157,7 +181,7 @@
       <aside class="notes">团队规范：用约定文件（CLAUDE.md/.cursorrules/AGENTS.md）落地规则；高敏感目录禁用 AI；每个 session 一个 commit；AI 写的代码人类必读；教训写进规则文件持续沉淀。下一课伦理与未来。</aside>
       <h2>团队规范（AI 时代）</h2>
       <ul>
-        <li class="fragment"><strong>项目约定文件</strong>：CLAUDE.md / .cursorrules / AGENTS.md</li>
+        <li class="fragment"><strong>项目约定文件</strong>：CLAUDE.md / .cursorrules / AGENTS.md — 放项目根目录，AI 工具启动时自动读取</li>
         <li class="fragment"><strong>禁用清单</strong>：哪些目录 AI 不能动</li>
         <li class="fragment"><strong>提交粒度</strong>：每个 AI session 一个 commit</li>
         <li class="fragment"><strong>code review</strong>：AI 写的代码人类必读</li>

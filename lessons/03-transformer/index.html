@@ -181,7 +181,20 @@ V = X · W_V   ← 别人"实际给什么"
       </ul>
     </section>
 
-    <!-- 12. 总结 + 预告 -->
+    <!-- 12. 知道 Transformer 能帮你做什么决策 -->
+    <section class="list">
+      <aside class="notes">这页是给工程师的"速查表"：了解 Transformer 内部结构后，很多 API 参数和架构选型就不再是黑盒了。参数量公式帮你估成本，MoE 帮你省钱，context window 决定 RAG 分块策略，temperature 本质就是 softmax 前的除数。</aside>
+      <h2>知道 Transformer 能帮你做什么决策</h2>
+      <ul>
+        <li class="fragment"><strong>选模型大小</strong> → 参数量 ≈ 层数 × 隐藏维度²，越大推理越慢/越贵</li>
+        <li class="fragment"><strong>设 max_tokens</strong> → 生成成本 = context 长度 × 层数，长输出贵</li>
+        <li class="fragment"><strong>选 MoE 省钱</strong> → 只激活部分参数，等效大模型能力但推理快</li>
+        <li class="fragment"><strong>理解 context window</strong> → 影响 RAG 设计（塞多少 chunk）</li>
+        <li class="fragment"><strong>调 temperature</strong> → 本质是 softmax 前除的那个数，越大越随机</li>
+      </ul>
+    </section>
+
+    <!-- 13. 总结 + 预告 -->
     <section class="summary">
       <h2>本课收获</h2>
       <div class="keywords">

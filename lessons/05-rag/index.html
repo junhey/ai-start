@@ -107,6 +107,51 @@
       </svg>
     </section>
 
+    <section class="terminal">
+      <aside class="notes">这段代码可以直接复制跑。5 分钟从零搭一个能问答的 RAG，体验完整流程。</aside>
+      <h2>5 min RAG quickstart</h2>
+<pre><code class="language-python" data-trim>
+# pip install langchain langchain-openai chromadb
+from langchain_community.document_loaders import TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_community.vectorstores import Chroma
+from langchain.chains import RetrievalQA
+
+# 1. 加载文档
+loader = TextLoader("my_doc.txt")
+docs = loader.load()
+
+# 2. 切块
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500, chunk_overlap=50
+)
+chunks = splitter.split_documents(docs)
+
+# 3. 向量化 + 存储
+db = Chroma.from_documents(chunks, OpenAIEmbeddings())
+
+# 4. 检索 + 生成
+qa = RetrievalQA.from_chain_type(
+    llm=ChatOpenAI(model="gpt-4o-mini"),
+    retriever=db.as_retriever(search_kwargs={"k": 3})
+)
+print(qa.invoke("文档里说了什么？"))
+</code></pre>
+    </section>
+
+    <section class="list">
+      <aside class="notes">选型口诀：原型用 Chroma，已有 PG 用 pgvector，要性能用 Qdrant，海量用 Milvus，不想运维用 Pinecone。</aside>
+      <h2>向量库选型决策表</h2>
+      <ul>
+        <li class="fragment"><strong>Chroma</strong> · 本地开发 / 原型 · <span class="mono">&lt; 10 万文档</span></li>
+        <li class="fragment"><strong>pgvector</strong> · 已有 Postgres，不想加新组件</li>
+        <li class="fragment"><strong>Qdrant</strong> · 需要过滤 + 高性能 · <span class="mono">10 万 - 1000 万</span></li>
+        <li class="fragment"><strong>Milvus</strong> · 海量数据 + 分布式 · <span class="mono">&gt; 1000 万</span></li>
+        <li class="fragment"><strong>Pinecone</strong> · 不想运维、有预算 · SaaS 全托管</li>
+      </ul>
+    </section>
+
     <section class="list">
       <aside class="notes">Embedding 直觉：一句话变成 1536 维向量。'猫'和'喵星人'近，'猫'和'汽车'远。</aside>
       <h2>Embedding 是什么</h2>

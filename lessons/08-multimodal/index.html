@@ -121,6 +121,35 @@
       </ul>
     </section>
 
+    <section class="terminal">
+      <aside class="notes">GPT-4o Vision API 是最简单的多模态入门：5 行代码即可让 AI 看图说话。支持传 URL 或 base64 图片。适用于 OCR、图表理解、UI 截图分析等场景。</aside>
+      <h2>GPT-4o Vision API（5行可跑）</h2>
+      <pre><code class="language-python"># pip install openai
+from openai import OpenAI
+client = OpenAI()
+
+resp = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[{"role": "user", "content": [
+        {"type": "text", "text": "这张图片里有什么？"},
+        {"type": "image_url", "image_url": {"url": "https://example.com/photo.jpg"}}
+    ]}]
+)
+print(resp.choices[0].message.content)</code></pre>
+    </section>
+
+    <section class="terminal">
+      <aside class="notes">Whisper 是 OpenAI 开源的多语言 ASR 模型，支持 99 种语言。base 模型仅 74MB，CPU 也能跑。命令行一行搞定，Python API 三行代码。适合会议记录、字幕生成、播客转文字。</aside>
+      <h2>Whisper 语音转文字</h2>
+      <pre><code class="language-bash"># pip install openai-whisper
+whisper audio.mp3 --model base --language zh</code></pre>
+      <pre><code class="language-python"># Python API
+import whisper
+model = whisper.load_model("base")
+result = model.transcribe("audio.mp3", language="zh")
+print(result["text"])</code></pre>
+    </section>
+
     <section class="list">
       <aside class="notes">视觉理解四大场景：OCR / 图表 / VQA / UI 自动化（Computer Use）。</aside>
       <h2>视觉理解能力</h2>

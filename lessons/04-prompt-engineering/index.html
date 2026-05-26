@@ -212,7 +212,44 @@ def build_prompt(role, audience, format, constraints):
       </ul>
     </section>
 
-    <!-- 14. 总结 -->
+    <!-- 14. Promptfoo 评测实战 -->
+    <section class="terminal">
+      <aside class="notes">Promptfoo 是开源 Prompt 评测工具，3 分钟即可跑一次 A/B 对比。安装后一个 YAML 文件搞定测试集定义。适合团队协作和 CI/CD 集成。</aside>
+      <h2>Promptfoo 评测实战</h2>
+      <pre><code class="language-yaml"># promptfoo.yaml - 3分钟跑一次 Prompt 评测
+# npm install -g promptfoo
+
+prompts:
+  - "你是代码审查员。审查以下代码，列出问题：\n{{code}}"
+  - "作为资深工程师，找出代码中的 3 个最严重问题：\n{{code}}"
+
+providers:
+  - openai:gpt-4o-mini
+
+tests:
+  - vars:
+      code: "def add(a, b): return a + b  # no type hints"
+    assert:
+      - type: contains
+        value: "type"</code></pre>
+      <pre><code class="language-bash">npx promptfoo eval && npx promptfoo view</code></pre>
+    </section>
+
+    <!-- 15. Prompt 技术决策表 -->
+    <section class="list">
+      <aside class="notes">这张决策表帮助快速判断该用哪种 Prompt 技术。实际场景中可以组合使用，比如 CoT + Self-consistency。记住：简单的先试简单的方法。</aside>
+      <h2>什么情况选什么 Prompt 技术</h2>
+      <ul>
+        <li class="fragment"><strong>简单分类 / 抽取</strong> → Zero-shot + JSON Schema</li>
+        <li class="fragment"><strong>需要推理 / 数学</strong> → CoT（或直接用 o1 / R1）</li>
+        <li class="fragment"><strong>格式要稳定</strong> → Few-shot（2-3 个示例）</li>
+        <li class="fragment"><strong>需要外部信息</strong> → ReAct + Tool Use</li>
+        <li class="fragment"><strong>要确保准确</strong> → Self-consistency（多次采样）</li>
+        <li class="fragment mute">→ 简单的先试简单的，别上来就上全家桶</li>
+      </ul>
+    </section>
+
+    <!-- 16. 总结 -->
     <section class="summary">
       <h2>本课收获</h2>
       <div class="keywords">

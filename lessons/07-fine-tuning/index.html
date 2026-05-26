@@ -156,6 +156,32 @@ LoRA 改造:
       </ul>
     </section>
 
+    <section class="terminal">
+      <aside class="notes">Unsloth 是目前最快的 QLoRA 微调框架，Google Colab 免费 T4 即可跑。这段代码展示完整流程：加载量化模型 → 添加 LoRA → 训练。实际项目需要准备 dataset 和配置 SFTTrainer。</aside>
+      <h2>5 分钟 QLoRA 体验</h2>
+      <pre><code class="language-python"># pip install unsloth
+from unsloth import FastLanguageModel
+import torch
+
+# 加载 4bit 量化模型
+model, tokenizer = FastLanguageModel.from_pretrained(
+    "unsloth/Qwen2.5-7B-bnb-4bit",
+    max_seq_length=2048,
+    load_in_4bit=True,
+)
+
+# 添加 LoRA adapter
+model = FastLanguageModel.get_peft_model(model, r=16, lora_alpha=16)
+
+# 训练（简化版，实际需要 dataset + trainer）
+# from trl import SFTTrainer
+# trainer = SFTTrainer(model=model, train_dataset=ds, ...)
+# trainer.train()
+
+# Google Colab 免费 T4 即可运行
+# 链接: https://colab.research.google.com/drive/1Ys44kVvmeZtnICzWz0xgpRnrIOjZAuxp</code></pre>
+    </section>
+
     <section class="summary">
       <h2>本课收获</h2>
       <div class="keywords">

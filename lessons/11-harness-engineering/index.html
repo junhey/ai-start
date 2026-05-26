@@ -292,7 +292,55 @@
 </code></pre>
     </section>
 
-    <!-- 15. 主流落地 -->
+    <!-- 15. 实战代码：Pydantic 输出验证 -->
+    <section class="terminal">
+      <aside class="notes">Pydantic + OpenAI Structured Output 是最轻量的输出验证方案。BaseModel 定义 schema，parse 方法自动验证。如果模型返回不符合 schema 的内容，SDK 会自动重试。severity 字段用 regex pattern 约束枚举值。</aside>
+      <h2>实战：Pydantic 输出验证</h2>
+<pre><code class="language-python" data-trim>
+# pip install pydantic openai
+from pydantic import BaseModel, Field
+from openai import OpenAI
+
+class ReviewResult(BaseModel):
+    """代码审查结果的结构化输出"""
+    issues: list[str] = Field(description="问题列表")
+    severity: str = Field(pattern="^(critical|major|minor)$")
+    suggestion: str
+
+client = OpenAI()
+resp = client.beta.chat.completions.parse(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "审查这段代码: def f(x): return x+1"}],
+    response_format=ReviewResult
+)
+result = resp.choices[0].message.parsed  # 类型安全！
+print(f"严重度: {result.severity}, 问题: {result.issues}")
+</code></pre>
+    </section>
+
+    <!-- 16. 实战代码：Langfuse 追溯集成 -->
+    <section class="terminal">
+      <aside class="notes">Langfuse 只需替换 import 就能接入追溯。所有 OpenAI 调用自动上报 trace，包括 prompt、completion、延迟、token 消耗和成本。metadata 可以传 session_id 方便按用户/任务维度分析。控制台提供可视化面板。</aside>
+      <h2>实战：Langfuse 追溯（3行接入）</h2>
+<pre><code class="language-python" data-trim>
+# pip install langfuse openai
+from langfuse.openai import openai  # 一行替换 import！
+
+# 之后所有 openai 调用自动上报 trace
+# 效果：每次调用的 prompt/completion/latency/cost 全部可视化
+# 控制台：https://cloud.langfuse.com
+
+client = openai.OpenAI()
+resp = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "hello"}],
+    metadata={"session_id": "user-123", "task": "greeting"}
+)
+# → Langfuse 自动记录 trace_id, 延迟, token 消耗, 成本
+</code></pre>
+    </section>
+
+    <!-- 17. 主流落地 -->
     <section class="list">
       <aside class="notes">实战清单：上线前 10 项必检。这页可以截图发给团队当 PR 模板。</aside>
       <h2>主流落地工具</h2>
